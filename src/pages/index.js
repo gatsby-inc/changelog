@@ -9,12 +9,11 @@ const Page = ({ data }) => {
   return (
     <main className="container mx-auto max-w-5xl grid gap-16 p-8">
       {nodes.map((node, index) => {
-        const { name, date, timestamp, markdown } = node;
+        const { name, date, markdown } = node;
         return (
-          <div>
+          <div key={index}>
             <div className="text-brand-primary text-5xl font-black">{name}</div>
             <div className="text-2xl font-black">{date}</div>
-            <div className="text-2xl font-black">{timestamp}</div>
             <div
               className="prose"
               dangerouslySetInnerHTML={{ __html: markdown }}
@@ -28,11 +27,11 @@ const Page = ({ data }) => {
 
 export const query = graphql`
   {
-    allChangelog(sort: { fields: name, order: DESC }) {
+    allChangelog(sort: { fields: index, order: DESC }) {
       nodes {
         name
+        index
         date(formatString: "dddd DD MMMM YYYY")
-        timestamp
         markdown
       }
     }

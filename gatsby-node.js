@@ -60,13 +60,14 @@ exports.sourceNodes = async ({
   }
   `);
 
-  const createMarkdownNode = async (data, name, repository) => {
+  const createMarkdownNode = async (data, name, repository, index) => {
     const { object } = data;
+
     createNode({
       id: object.id,
+      index: index,
       name: name,
       date: repository.createdAt,
-      timestamp: new Date(repository.createdAt),
       markdown: await convertToMarkdown(object.text),
       internal: {
         mediaType: 'text/markdown',
@@ -80,9 +81,9 @@ exports.sourceNodes = async ({
     const { object, name, repository } = item;
     if (Array.isArray(object.entries)) {
       const markdown = object.entries.find((item) => item.name === 'index.md');
-      createMarkdownNode(markdown, name, repository);
+      createMarkdownNode(markdown, name, repository, index);
     } else {
-      createMarkdownNode(item, name, repository);
+      createMarkdownNode(item, name, repository, index);
     }
   });
 };
