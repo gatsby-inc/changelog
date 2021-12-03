@@ -1,4 +1,6 @@
 const { graphql } = require('@octokit/graphql');
+const remark_html = require('remark-html');
+const remark = require('remark');
 
 const graphqlWithAuth = graphql.defaults({
   headers: {
@@ -8,12 +10,10 @@ const graphqlWithAuth = graphql.defaults({
 
 const CHANGELOG = 'changelog';
 
-exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
-  createTypes(`
-    type changelog implements Node {
-      text: markdown @link(from: "fields.text")
-    }
-  `);
+const convertToMarkdown = async (string) => {
+  const response = await remark().use(remark_html).process(string);
+
+  return String(response);
 };
 
 exports.sourceNodes = async ({
@@ -60,12 +60,16 @@ exports.sourceNodes = async ({
   }
   `);
 
-  const createMarkdownNode = async (data) => {
+  const createMarkdownNode = async (data, name, repository) => {
     const { object } = data;
     createNode({
-      ...data,
       id: object.id,
+      name: name,
+      date: repository.createdAt,
+      timestamp: new Date(repository.createdAt),
+      markdown: await convertToMarkdown(object.text),
       internal: {
+        mediaType: 'text/markdown',
         type: CHANGELOG,
         contentDigest: createContentDigest(data)
       }
@@ -73,39 +77,12 @@ exports.sourceNodes = async ({
   };
 
   entries.forEach((item, index) => {
-    const { object } = item;
-
+    const { object, name, repository } = item;
     if (Array.isArray(object.entries)) {
       const markdown = object.entries.find((item) => item.name === 'index.md');
-      createMarkdownNode(markdown);
+      createMarkdownNode(markdown, name, repository);
     } else {
-      createMarkdownNode(item);
+      createMarkdownNode(item, name, repository);
     }
   });
-};
-
-exports.onCreateNode = async ({
-  node,
-  actions: { createNode, createNodeField },
-  createNodeId,
-  createContentDigest
-}) => {
-  if (node.internal.type === CHANGELOG) {
-    const markdownNode = {
-      id: createNodeId(node.id),
-      parent: node.id,
-      internal: {
-        mediaType: 'text/markdown',
-        type: 'markdown',
-        content: node.object.text,
-        contentDigest: createContentDigest(node)
-      }
-    };
-
-    createNode(markdownNode);
-
-    if (markdownNode) {
-      createNodeField({ node, name: 'text', value: markdownNode.id });
-    }
-  }
 };
