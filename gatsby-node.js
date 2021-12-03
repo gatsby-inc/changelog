@@ -68,7 +68,7 @@ exports.sourceNodes = async ({
       index: index,
       name: name,
       date: repository.createdAt,
-      markdown: await convertToMarkdown(object.text),
+      html: await convertToMarkdown(object.text),
       internal: {
         mediaType: 'text/markdown',
         type: CHANGELOG,
