@@ -1,3 +1,23 @@
+# TBC
+
+👀 See the preview: [https://](https://)
+
+📝 Read the post on the Dev.to: [...](https://)
+
+⚙️ This repo is based on [Gatsby's minimal demo](https://github.com/gatsby-inc/gatsby-demo-minimal)
+
+## GitHub Rest
+
+[https://docs.github.com/en/rest](https://docs.github.com/en/rest)
+
+## GitHub GraphQL
+
+[https://github.com/octokit/graphql.js](https://github.com/octokit/graphql.js)
+[https://docs.github.com/en/graphql](https://docs.github.com/en/graphql)
+
+<!-- https://github.community/search?q=GraphQL%20getting%20file -->
+<!-- https://docs.github.com/en/graphql/overview/explorer -->
+
 <p align="center">
   <a href="https://www.gatsbyjs.com">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
