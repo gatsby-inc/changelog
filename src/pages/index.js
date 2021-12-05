@@ -1,22 +1,40 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { graphql, Link } from 'gatsby';
 import { Location } from '@reach/router';
+
+import { MenuIcon } from '@heroicons/react/solid';
 
 const Page = ({ data }) => {
   const {
     allChangelog: { nodes }
   } = data;
 
+  const [navOpen, setNavOpen] = useState(false);
+
+  const handleNav = () => {
+    setNavOpen(!navOpen);
+  };
+
   return (
     <Fragment>
       <header className="fixed top-0 bg-white px-8 py-4 border-b border-gray-200 w-screen min-h-header z-header">
-        <a
-          href="https://twitter.com/GatsbyChangelog"
-          rel="noreferrer"
-          target="_blank"
-        >
-          @GatsbyChangelog
-        </a>
+        <div className="flex justify-between items-center">
+          <div>
+            <a
+              href="https://twitter.com/GatsbyChangelog"
+              rel="noreferrer"
+              target="_blank"
+            >
+              @GatsbyChangelog
+            </a>
+          </div>
+          <div>
+            <MenuIcon
+              className="block md:hidden h-5 w-5 cursor-pointer"
+              onClick={handleNav}
+            />
+          </div>
+        </div>
       </header>
       <main className="mt-main">
         <Location>
@@ -24,8 +42,12 @@ const Page = ({ data }) => {
             const { hash } = location;
 
             return (
-              <nav className="fixed h-screen px-4 py-8 text-sm bg-white border-r border-gray-200 z-nav overflow-y-scroll">
-                <ul className="mb-16">
+              <nav
+                className={`absolute top-8 shadow-xl md:fixed md:left-0 h-screen px-4 py-8 text-sm bg-white border-r border-gray-200 z-nav overflow-y-scroll transition-all duration-500 ease-in-out ${
+                  navOpen ? 'left-0' : '-left-80'
+                } `}
+              >
+                <ul>
                   {nodes.map((node, index) => {
                     const { name } = node;
 
@@ -51,15 +73,15 @@ const Page = ({ data }) => {
             );
           }}
         </Location>
-        <section className="ml-sidebar">
-          <div className="px-8 py-8">
+        <section className="md:ml-sidebar">
+          <div className="px-4 py-4 md:px-8 md:py-8">
             <article className="grid gap-8">
               {nodes.map((node, index) => {
                 const { name, date, html } = node;
 
                 const hash = `#${name}`;
                 return (
-                  <div key={index}>
+                  <div key={index} className="overflow-scroll">
                     <Link
                       className="jumplink text-brand-primary text-3xl font-black"
                       to={hash}

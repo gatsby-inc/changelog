@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/gatsby-inc/gatsby-demo-minimal#readme",
   "dependencies": {
+    "@heroicons/react": "^1.0.5",
     "@octokit/graphql": "^4.8.0",
     "gatsby": "^4.1.1",
     "react": "^17.0.2",
