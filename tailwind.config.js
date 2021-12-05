@@ -29,7 +29,22 @@ module.exports = {
         }
       },
       gridTemplateColumns: {
-        ['auto-1fr']: 'auto 1fr'
+        ['auto-1fr']: 'auto 1fr',
+        ['2fr-1fr']: '2fr 1fr'
+      },
+      margin: (theme) => ({
+        main: theme('minHeight.header'),
+        sidebar: theme('minWidth.nav')
+      }),
+      minWidth: {
+        nav: 350
+      },
+      minHeight: {
+        header: 60
+      },
+      zIndex: {
+        nav: 998,
+        header: 999
       }
     }
   },

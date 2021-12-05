@@ -1,6 +1,8 @@
 const { graphql } = require('@octokit/graphql');
-const remark_html = require('remark-html');
 const remark = require('remark');
+const remarkParse = require('remark-parse');
+const remarkRehype = require('remark-rehype');
+const rehypeStringify = require('rehype-stringify');
 
 const graphqlWithAuth = graphql.defaults({
   headers: {
@@ -11,7 +13,11 @@ const graphqlWithAuth = graphql.defaults({
 const CHANGELOG = 'changelog';
 
 const convertToMarkdown = async (string) => {
-  const response = await remark().use(remark_html).process(string);
+  const response = await remark()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeStringify)
+    .process(string);
 
   return String(response);
 };
@@ -27,7 +33,7 @@ exports.sourceNodes = async ({
   } = await graphqlWithAuth(`
   query {
     repository(name: "gatsby", owner: "gatsbyjs") {
-      folder: object(expression: "master:docs/docs/reference/release-notes/") {
+      folder: object(expression: "master:docs/docs/reference/release-notes") {
         ... on Tree {
           entries {
             name
