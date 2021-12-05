@@ -12,8 +12,14 @@ const Page = ({ data }) => {
         const { name, date, html } = node;
         return (
           <div key={index}>
-            <div className="text-brand-primary text-5xl font-black">{name}</div>
-            <div className="text-2xl font-black">{date}</div>
+            <a
+              className="text-brand-primary text-5xl font-black"
+              href={`#${name}`}
+            >
+              <span className="text-lg text-gray-300">#</span>
+              {name}
+            </a>
+            <div className="text-md text-gray-500">{date}</div>
             <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
           </div>
         );

@@ -3,8 +3,27 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.brand.text'),
+            code: {
+              padding: theme('spacing.1'),
+              fontWeight: theme('fontWeight.normal'),
+              backgroundColor: '#fbf2e9'
+            },
+            'code::before': {
+              content: '""'
+            },
+            'code::after': {
+              content: '""'
+            }
+          }
+        }
+      }),
       colors: {
         brand: {
+          text: '#36313d',
           default: '#663399',
           primary: '#7026B9'
         }
