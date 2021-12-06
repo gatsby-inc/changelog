@@ -33,9 +33,6 @@ const RootElement = ({ children }) => {
   `);
 
   const { frontmatter } = nodes[0];
-  console.log(frontmatter.date);
-  console.log(frontmatter.version);
-  console.log(frontmatter.title);
 
   const seoTitle = `${title} | ${frontmatter.version}`;
   const seoDescription = `${frontmatter.title} | ${frontmatter.date}`;

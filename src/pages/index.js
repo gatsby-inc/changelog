@@ -43,7 +43,7 @@ const Page = ({ data }) => {
 
             return (
               <nav
-                className={`absolute top-8 shadow-xl md:fixed md:left-0 h-screen min-w-nav px-4 py-8 text-sm bg-white border-r border-gray-200 z-nav overflow-y-scroll transition-all duration-500 ease-in-out ${
+                className={`fixed top-8 shadow-xl  md:left-0 h-screen min-w-nav px-4 py-8 text-sm bg-white border-r border-gray-200 z-nav overflow-y-scroll transition-all duration-500 ease-in-out ${
                   navOpen ? 'left-0' : '-left-96'
                 } `}
               >
