@@ -43,7 +43,7 @@ const Page = ({ data }) => {
 
             return (
               <nav
-                className={`fixed top-8 shadow-xl  md:left-0 h-screen min-w-nav px-4 py-8 text-sm bg-white border-r border-gray-200 z-nav overflow-y-scroll transition-all duration-500 ease-in-out ${
+                className={`fixed top-8 shadow-xl  md:left-0 h-screen min-w-nav px-8 py-16 text-sm bg-white border-r border-gray-200 z-nav overflow-y-scroll transition-all duration-500 ease-in-out ${
                   navOpen ? 'left-0' : '-left-96'
                 } `}
               >
@@ -57,7 +57,7 @@ const Page = ({ data }) => {
                     const isHash = hash === `#${version || name}`;
 
                     return (
-                      <li key={index} className="mb-1">
+                      <li key={index} className="mb-2">
                         <Link
                           to={`#${version || name}`}
                           className={`block p-1 rounded ${
@@ -66,7 +66,7 @@ const Page = ({ data }) => {
                               : 'hover:underline hover:text-brand-primary'
                           }`}
                         >
-                          {version || name}
+                          {`${index === 0 ? '*' : ''} Version: ${version}`}
                         </Link>
                       </li>
                     );
@@ -121,7 +121,10 @@ const Page = ({ data }) => {
 
 export const query = graphql`
   {
-    allChangelog(sort: { fields: index, order: DESC }) {
+    allChangelog(
+      sort: { fields: index, order: DESC }
+      filter: { frontmatter: { version: { ne: null } } }
+    ) {
       nodes {
         name
         index
