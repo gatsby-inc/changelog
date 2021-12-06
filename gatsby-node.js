@@ -13,8 +13,6 @@ const graphqlWithAuth = graphql.defaults({
   }
 });
 
-const CHANGELOG = 'changelog';
-
 const convertToHTML = async (markdown) => {
   const grayMatter = matter(markdown);
 
@@ -78,7 +76,6 @@ exports.sourceNodes = async ({
 
   const createMarkdownNode = async (data, name, repository, index) => {
     const { object } = data;
-
     createNode({
       id: object.id,
       index: index,
@@ -86,8 +83,7 @@ exports.sourceNodes = async ({
       frontmatter: await transformFrontmatter(object.text),
       html: await convertToHTML(object.text),
       internal: {
-        mediaType: 'text/markdown',
-        type: CHANGELOG,
+        type: 'changelog',
         contentDigest: createContentDigest(data)
       }
     });
