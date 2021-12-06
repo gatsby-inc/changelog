@@ -37,7 +37,7 @@ module.exports = {
         sidebar: theme('minWidth.nav')
       }),
       minWidth: {
-        nav: 190
+        nav: 200
       },
       minHeight: {
         header: 60

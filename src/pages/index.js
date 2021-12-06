@@ -4,6 +4,9 @@ import { Location } from '@reach/router';
 
 import { MenuIcon, XIcon } from '@heroicons/react/solid';
 
+import Logo from '../components/logo';
+import Twitter from '../components/twitter';
+
 const Page = ({ data }) => {
   const {
     allChangelog: { nodes }
@@ -19,26 +22,19 @@ const Page = ({ data }) => {
     <Fragment>
       <header className="fixed top-0 bg-white px-8 py-4 border-b border-gray-200 w-screen min-h-header z-header">
         <div className="flex justify-between items-center">
-          <div>
-            <a
-              href="https://twitter.com/GatsbyChangelog"
-              rel="noreferrer"
-              target="_blank"
-            >
-              @GatsbyChangelog
-            </a>
-          </div>
-          <div>
-            <div className="block md:hidden">
-              {navOpen ? (
-                <XIcon className="h-5 w-5 cursor-pointer" onClick={handleNav} />
-              ) : (
-                <MenuIcon
-                  className="h-5 w-5 cursor-pointer"
-                  onClick={handleNav}
-                />
-              )}
-            </div>
+          <Link to="/">
+            <Logo />
+          </Link>
+
+          <div className="block md:hidden">
+            {navOpen ? (
+              <XIcon className="h-5 w-5 cursor-pointer" onClick={handleNav} />
+            ) : (
+              <MenuIcon
+                className="h-5 w-5 cursor-pointer"
+                onClick={handleNav}
+              />
+            )}
           </div>
         </div>
       </header>
@@ -53,6 +49,17 @@ const Page = ({ data }) => {
                   navOpen ? 'left-0' : '-left-96'
                 } `}
               >
+                <a
+                  className="grid grid-cols-auto-1fr mb-8"
+                  href="https://twitter.com/GatsbyChangelog"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <Twitter />
+                  <span className="text-sm text-gray-400">
+                    @GatsbyChangelog
+                  </span>
+                </a>
                 <ul>
                   {nodes.map((node, index) => {
                     const {
@@ -93,7 +100,7 @@ const Page = ({ data }) => {
               navOpen ? 'cursor-pointer md:hidden' : 'hidden'
             } w-full h-full bg-black opacity-50 z-lightbox`}
           />
-          <div className="px-4 py-4 md:px-8 md:py-8">
+          <div className="px-4 py-4 md:px-12 md:py-8">
             <article className="grid gap-8">
               {nodes.map((node, index) => {
                 const {
