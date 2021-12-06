@@ -3,6 +3,7 @@ const remark = require('remark');
 const remarkParse = require('remark-parse');
 const remarkRehype = require('remark-rehype');
 const rehypeStringify = require('rehype-stringify');
+const matter = require('gray-matter');
 
 const graphqlWithAuth = graphql.defaults({
   headers: {
@@ -12,14 +13,22 @@ const graphqlWithAuth = graphql.defaults({
 
 const CHANGELOG = 'changelog';
 
-const convertToMarkdown = async (string) => {
+const convertToHTML = async (markdown) => {
+  const grayMatter = matter(markdown);
+
   const response = await remark()
     .use(remarkParse)
     .use(remarkRehype)
     .use(rehypeStringify)
-    .process(string);
+    .process(grayMatter.content);
 
   return String(response);
+};
+
+const transformFrontmatter = async (markdown) => {
+  const grayMatter = matter(markdown);
+
+  return grayMatter.data;
 };
 
 exports.sourceNodes = async ({
@@ -37,9 +46,6 @@ exports.sourceNodes = async ({
         ... on Tree {
           entries {
             name
-            repository {
-              createdAt
-            }
             object {
               ... on Tree {
                 entries {
@@ -73,8 +79,8 @@ exports.sourceNodes = async ({
       id: object.id,
       index: index,
       name: name,
-      date: repository.createdAt,
-      html: await convertToMarkdown(object.text),
+      frontmatter: await transformFrontmatter(object.text),
+      html: await convertToHTML(object.text),
       internal: {
         mediaType: 'text/markdown',
         type: CHANGELOG,
