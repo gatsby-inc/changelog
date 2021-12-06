@@ -43,6 +43,7 @@ module.exports = {
         header: 60
       },
       zIndex: {
+        lightbox: 997,
         nav: 998,
         header: 999
       }

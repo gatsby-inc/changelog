@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { graphql, Link } from 'gatsby';
 import { Location } from '@reach/router';
 
-import { MenuIcon } from '@heroicons/react/solid';
+import { MenuIcon, XIcon } from '@heroicons/react/solid';
 
 const Page = ({ data }) => {
   const {
@@ -29,10 +29,16 @@ const Page = ({ data }) => {
             </a>
           </div>
           <div>
-            <MenuIcon
-              className="block md:hidden h-5 w-5 cursor-pointer"
-              onClick={handleNav}
-            />
+            <div className="block md:hidden">
+              {navOpen ? (
+                <XIcon className="h-5 w-5 cursor-pointer" onClick={handleNav} />
+              ) : (
+                <MenuIcon
+                  className="h-5 w-5 cursor-pointer"
+                  onClick={handleNav}
+                />
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -77,6 +83,16 @@ const Page = ({ data }) => {
           }}
         </Location>
         <section className="md:ml-sidebar">
+          <div
+            onClick={handleNav}
+            onKeyDown={handleNav}
+            role="button"
+            aria-label="close navigation"
+            tabIndex={0}
+            className={`fixed ${
+              navOpen ? 'cursor-pointer md:hidden' : 'hidden'
+            } w-full h-full bg-black opacity-50 z-lightbox`}
+          />
           <div className="px-4 py-4 md:px-8 md:py-8">
             <article className="grid gap-8">
               {nodes.map((node, index) => {
