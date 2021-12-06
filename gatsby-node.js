@@ -29,7 +29,7 @@ const convertToHTML = async (markdown) => {
   return String(response);
 };
 
-const transformFrontmatter = async (markdown) => {
+const transformFrontmatter = (markdown) => {
   const grayMatter = matter(markdown);
 
   return grayMatter.data;
