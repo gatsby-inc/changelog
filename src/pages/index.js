@@ -92,7 +92,8 @@ const Page = ({ data }) => {
                     <div className="grid gap-8">
                       <div>
                         <Link
-                          className="jumplink text-brand-primary text-5xl font-black"
+                          id={hash.split('#')[1]}
+                          className="text-brand-primary text-5xl font-black"
                           to={hash}
                         >
                           <span className="text-2xl text-gray-300 mr-1">#</span>

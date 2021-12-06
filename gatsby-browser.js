@@ -5,15 +5,12 @@ import RootElement from './src/components/root-element';
 import './src/styles/global.css';
 
 export const onRouteUpdate = ({ location }) => {
-  const jumplink = document.querySelectorAll(
-    `a.jumplink[href="/${location.hash}"]`
-  )[0];
+  const heading = document.getElementById(location.hash.split('#')[1]);
+  const nav = document.querySelector(`header`);
 
-  const nav = document.querySelector(`header`).offsetHeight;
-
-  if (jumplink) {
+  if (heading) {
     window.scrollTo({
-      top: jumplink.offsetTop - nav - 32
+      top: heading.offsetTop - nav.offsetHeight - 12
     });
   }
   return true;
