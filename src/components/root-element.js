@@ -22,42 +22,50 @@ const RootElement = ({ children }) => {
       }
       allChangelog(sort: { fields: index, order: DESC }, limit: 1) {
         nodes {
-          name
+          frontmatter {
+            date(formatString: "MMMM DD YYYY")
+            version
+            title
+          }
         }
       }
     }
   `);
 
-  console.log(nodes);
+  const { frontmatter } = nodes[0];
+  console.log(frontmatter.date);
+  console.log(frontmatter.version);
+  console.log(frontmatter.title);
 
-  const description = `Gatsby Release: ${nodes[0].name} | tbc`;
+  const seoTitle = `${title} | ${frontmatter.version}`;
+  const seoDescription = `${frontmatter.title} | ${frontmatter.date}`;
 
   return (
     <Fragment>
       <Helmet>
         {/* Default / HTML */}
         <html lang={language} />
-        <title>{title}</title>
+        <title>{seoTitle}</title>
         <link rel="canonical" href={url} />
 
         {/* Primary Meta Tags */}
-        <meta name="title" content={title} />
-        <meta name="description" content={description} />
+        <meta name="title" content={seoTitle} />
+        <meta name="description" content={seoDescription} />
         <meta name="image" content={image} />
         <meta name="keywords" content={keywords ? keywords.join(', ') : null} />
 
         {/* Open Graph / Facebook  */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
         <meta property="og:image" content={image} />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={url} />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDescription} />
         <meta name="twitter:image" content={image} />
 
         {/* favicon */}

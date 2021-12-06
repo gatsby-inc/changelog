@@ -5,7 +5,7 @@ require('dotenv').config({
 module.exports = {
   siteMetadata: {
     url: 'https://changelog.gatsbyjs.io',
-    title: "Gatsby's Changelog",
+    title: 'Gatsby Changelog',
     image: 'og-image.jpg',
     language: 'en-us',
     keywords: ['gatsby', 'gatsbyjs'],
