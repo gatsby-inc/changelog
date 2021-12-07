@@ -11,7 +11,6 @@ const Page = ({ serverData: { pullRequests, watchers, issues } }) => {
         </h2>
         <ul className="grid gap-4">
           {pullRequests.nodes.map((node, index) => {
-            console.log(node);
             const {
               author: { login },
               publishedAt,

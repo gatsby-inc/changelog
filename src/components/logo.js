@@ -2,7 +2,7 @@ import React from 'react';
 
 const Logo = () => {
   return (
-    <svg width="120px" height="auto" viewBox="0 0 240 48" fill="#000000">
+    <svg width="120px" height="100%" viewBox="0 0 240 48" fill="#000000">
       <circle
         cx="23.3"
         cy="24"
