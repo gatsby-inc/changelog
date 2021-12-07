@@ -2,12 +2,25 @@ import React from 'react';
 import { Link } from 'gatsby';
 
 import useAllChangelog from '../hooks/use-all-changelog';
+import useIntro from '../hooks/use-intro';
 
-const Page = ({ data }) => {
+const Page = () => {
   const changelog = useAllChangelog();
+  const intro = useIntro();
 
   return (
     <article className="grid gap-8">
+      <div className="overflow-scroll">
+        <div className="grid gap-4">
+          <h1 className="text-brand-primary text-5xl font-black">
+            {intro.name}
+          </h1>
+          <div
+            className="prose max-w-full text-sm"
+            dangerouslySetInnerHTML={{ __html: intro.html }}
+          />
+        </div>
+      </div>
       {changelog.map((node, index) => {
         const {
           name,

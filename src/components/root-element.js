@@ -81,6 +81,19 @@ const RootElement = ({ children }) => {
                 </div>
                 <hr className="border-gray-200 mt-8 mb-8" />
                 <ul>
+                  <li>
+                    <Link
+                      to="/"
+                      className={`block px-2 py-1 rounded hover:underline hover:text-brand-primary ${
+                        !hash ? 'font-bold bg-purple-100' : ''
+                      }`}
+                    >
+                      Hi{' '}
+                      <span role="img" aria-label="Waving Hand">
+                        👋
+                      </span>
+                    </Link>
+                  </li>
                   {changelog.map((node, index) => {
                     const {
                       name,

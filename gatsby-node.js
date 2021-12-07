@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { graphql } = require('@octokit/graphql');
 const remark = require('remark');
 const remarkParse = require('remark-parse');
@@ -37,6 +38,18 @@ exports.sourceNodes = async ({
   actions: { createNode },
   createContentDigest
 }) => {
+  const md = fs.readFileSync('./src/content/intro.md', 'utf8');
+
+  createNode({
+    id: '123',
+    name: await transformFrontmatter(md).title,
+    html: await convertToHTML(md),
+    internal: {
+      type: 'intro',
+      contentDigest: createContentDigest(md)
+    }
+  });
+
   const {
     repository: {
       folder: { entries }
