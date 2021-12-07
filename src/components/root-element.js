@@ -24,7 +24,7 @@ const RootElement = ({ children }) => {
       <Seo />
       <header className="fixed flex items-center top-0 bg-white px-4 md:px-8 py-4 border-b border-gray-200 w-screen min-h-header z-header">
         <div className="flex flex-grow justify-between items-center">
-          <Link to="/">
+          <Link onClick={handleNav} to="/">
             <Logo />
           </Link>
 
