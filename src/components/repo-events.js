@@ -10,7 +10,7 @@ const RepoEvents = ({
   children
 }) => {
   return (
-    <section className={`bg-white rounded-lg shadow-lg p-6 bg-${background}`}>
+    <section className={`rounded-lg shadow-lg p-6 bg-${background}`}>
       <div className="grid grid-cols-auto-1fr">
         <TerminalIcon className={`h-5 w-5 mt-0.5 text-${color}`} />
         <h3 className="mb-4 pl-1">
