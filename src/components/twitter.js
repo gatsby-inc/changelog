@@ -2,7 +2,7 @@ import React from 'react';
 
 const Twitter = () => {
   return (
-    <svg width="24px" height="100%" viewBox="0 0 48 48" fill="#459EF0">
+    <svg width="24px" height="24px" viewBox="0 0 48 48" fill="#459EF0">
       <g>
         <path
           d="M42.113472,14.7070818c0.0277596,0.4015961,0.0277596,0.8031931,0.0277596,1.2084904

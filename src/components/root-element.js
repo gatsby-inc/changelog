@@ -105,6 +105,7 @@ const RootElement = ({ children }) => {
                     return (
                       <li key={index} className="mb-2">
                         <Link
+                          onClick={handleNav}
                           to={`/#${version || name}`}
                           className={`block px-2 py-1 rounded ${
                             isHash
