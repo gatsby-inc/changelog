@@ -85,9 +85,10 @@ const RootElement = ({ children }) => {
                   <li>
                     <Link
                       to="/"
-                      className={`block px-2 py-1 rounded hover:underline hover:text-brand-primary ${
+                      activeClassName={`${
                         !hash ? 'font-bold bg-purple-100' : ''
                       }`}
+                      className="block px-2 py-1 rounded hover:underline hover:text-brand-primary"
                     >
                       Hi{' '}
                       <span role="img" aria-label="Waving Hand">
