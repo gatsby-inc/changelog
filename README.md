@@ -15,6 +15,9 @@
 [https://github.com/octokit/graphql.js](https://github.com/octokit/graphql.js)
 [https://docs.github.com/en/graphql](https://docs.github.com/en/graphql)
 
+## GitHub Actions - Schedule
+[https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#schedule](https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#schedule)
+
 <!-- https://github.community/search?q=GraphQL%20getting%20file -->
 <!-- https://docs.github.com/en/graphql/overview/explorer -->
 

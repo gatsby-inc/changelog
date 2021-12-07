@@ -1,0 +1,19 @@
+name: Build Site
+
+on:
+  schedule:
+    - cron: '* */12 * * *'
+
+jobs:
+  Trigger-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "set env using GATSBY_CLOUD_BUILD_WEBOOK"
+        env:
+          GATSBY_WEBHOOK: ${{secrets.GATSBY_CLOUD_BUILD_WEBOOK}}
+      - name: Post to Gatsby Cloud Webhook
+        id: rebuild
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: ${{secrets.GATSBY_CLOUD_BUILD_WEBOOK}}
+          method: 'POST'
