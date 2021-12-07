@@ -47,7 +47,7 @@ module.exports = {
         sidebar: theme('minWidth.nav')
       }),
       height: {
-        main: 'calc(100vh - 220px)'
+        main: 'calc(100vh - 340px)'
       },
       minWidth: {
         nav: 200

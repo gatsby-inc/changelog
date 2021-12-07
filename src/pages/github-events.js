@@ -3,17 +3,20 @@ import { Octokit } from '@octokit/rest';
 
 import RepoEvents from '../components/repo-events';
 import EventCard from '../components/event-card';
+import GatsbyLogo from '../components/gatsby-logo';
+import ChangelogLogo from '../components/changelog-logo';
 
 const Page = ({ serverData: { gatsby, changelog } }) => {
   return (
     <div className="grid lg:grid-cols-2 gap-8">
       <RepoEvents
-        repoName="Gatsby"
         color="white"
         background="brand-default"
         inner="purple-50"
+        logo={<GatsbyLogo />}
+        repo={gatsby.repo}
       >
-        {gatsby.map((event, index) => {
+        {gatsby.events.map((event, index) => {
           const { type, actor, created_at, repo, payload } = event;
           return (
             <EventCard
@@ -28,12 +31,13 @@ const Page = ({ serverData: { gatsby, changelog } }) => {
         })}
       </RepoEvents>
       <RepoEvents
-        repoName="Changelog"
         color="brand-default"
         background="white"
         inner="purple-50"
+        logo={<ChangelogLogo />}
+        repo={changelog.repo}
       >
-        {changelog.map((event, index) => {
+        {changelog.events.map((event, index) => {
           const { type, actor, created_at, repo, payload } = event;
           return (
             <EventCard
@@ -54,25 +58,47 @@ const Page = ({ serverData: { gatsby, changelog } }) => {
 export default Page;
 
 export async function getServerData() {
+  const GATSBY_JS = 'gatsbyjs';
+  const GATSBY = 'gatsby';
+
+  const GATSBY_INC = 'gatsby-inc';
+  const CHANGELOG = 'changelog';
+
   const octokit = new Octokit({
     auth: process.env.OCTOKIT_PERSONAL_ACCESS_TOKEN,
     userAgent: 'Changelog'
   });
 
-  const { data: gatsby } = await octokit.request(
-    'GET /repos/{owner}/{repo}/events',
+  const { data: gatsbyRepo } = await octokit.request(
+    `GET /repos/{owner}/{repo}`,
     {
-      owner: 'gatsbyjs',
-      repo: 'gatsby',
-      per_page: 100
+      owner: GATSBY_JS,
+      repo: GATSBY
     }
   );
 
-  const { data: changelog } = await octokit.request(
+  const { data: gatsbyEvents } = await octokit.request(
     'GET /repos/{owner}/{repo}/events',
     {
-      owner: 'gatsby-inc',
-      repo: 'changelog',
+      owner: GATSBY_JS,
+      repo: GATSBY,
+      per_page: 3
+    }
+  );
+
+  const { data: changelogRepo } = await octokit.request(
+    `GET /repos/{owner}/{repo}`,
+    {
+      owner: GATSBY_INC,
+      repo: CHANGELOG
+    }
+  );
+
+  const { data: changelogEvents } = await octokit.request(
+    'GET /repos/{owner}/{repo}/events',
+    {
+      owner: GATSBY_INC,
+      repo: CHANGELOG,
       per_page: 100
     }
   );
@@ -80,8 +106,14 @@ export async function getServerData() {
   return {
     status: 200,
     props: {
-      gatsby,
-      changelog
+      gatsby: {
+        repo: gatsbyRepo,
+        events: gatsbyEvents
+      },
+      changelog: {
+        repo: changelogRepo,
+        events: changelogEvents
+      }
     }
   };
 }
