@@ -1,15 +1,16 @@
 import React from 'react';
 
-import graphqlWithAuth from '../utils/graphql-with-auth';
+// import graphqlWithAuth from '../utils/graphql-with-auth';
 
-const Page = ({ serverData: { pullRequests, watchers, issues } }) => {
+const Page = ({ serverData }) => {
   return (
     <article>
       <div className="grid gap-4">
         <h2 className="text-brand-primary text-2xl font-black">
           Pull Requests
         </h2>
-        <ul className="grid gap-4">
+        <p>{serverData.something}</p>
+        {/* <ul className="grid gap-4">
           {pullRequests.nodes.map((node, index) => {
             const {
               author: { login },
@@ -37,7 +38,7 @@ const Page = ({ serverData: { pullRequests, watchers, issues } }) => {
               </li>
             );
           })}
-        </ul>
+        </ul> */}
       </div>
       {/* <pre className="prose">{JSON.stringify(pullRequests, null, 2)}</pre>
       <pre className="prose">{JSON.stringify(watchers, null, 2)}</pre>
@@ -46,48 +47,54 @@ const Page = ({ serverData: { pullRequests, watchers, issues } }) => {
   );
 };
 
-export async function getServerData() {
-  const {
-    repository: { pullRequests, watchers, issues }
-  } = await graphqlWithAuth(`
-  query {
-    repository(name: "gatsby", owner: "gatsbyjs") {
-      pullRequests(last: 10) {
-        nodes {
-          author {
-            login
-          }
-          bodyText
-          publishedAt
-          title
-        }
-      }
-      watchers(last: 10) {
-        nodes {
-          createdAt
-          login
-        }
-      }
-      issues(last: 10) {
-        nodes {
-          author {
-            login
-          }
-          bodyText
-        }
-      }
-    }
-  }
-  `);
+export default Page;
 
+export async function getServerData() {
   return {
     status: 200,
     props: {
-      pullRequests,
-      watchers,
-      issues
+      something: 'test'
     }
   };
-}
+  // const {
+  //   repository: { pullRequests, watchers, issues }
+  // } = await graphqlWithAuth(`
+  // query {
+  //   repository(name: "gatsby", owner: "gatsbyjs") {
+  //     pullRequests(last: 10) {
+  //       nodes {
+  //         author {
+  //           login
+  //         }
+  //         bodyText
+  //         publishedAt
+  //         title
+  //       }
+  //     }
+  //     watchers(last: 10) {
+  //       nodes {
+  //         createdAt
+  //         login
+  //       }
+  //     }
+  //     issues(last: 10) {
+  //       nodes {
+  //         author {
+  //           login
+  //         }
+  //         bodyText
+  //       }
+  //     }
+  //   }
+  // }
+  // `);
 
-export default Page;
+  // return {
+  //   status: 200,
+  //   props: {
+  //     pullRequests,
+  //     watchers,
+  //     issues
+  //   }
+  // };
+}
