@@ -71,6 +71,7 @@ const RootElement = ({ children }) => {
                     GatsbyJs
                   </a>
                   <Link
+                    onClick={handleNav}
                     activeClassName="bg-purple-100 text-gray-800"
                     className="grid gap-2 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
                     to="/github-events"
