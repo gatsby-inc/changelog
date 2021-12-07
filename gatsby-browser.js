@@ -10,7 +10,7 @@ export const onRouteUpdate = ({ location }) => {
 
   if (heading) {
     window.scrollTo({
-      top: heading.offsetTop - nav.offsetHeight - 12
+      top: heading.offsetTop - nav.offsetHeight - 28
     });
   }
   return true;

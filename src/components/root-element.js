@@ -1,87 +1,132 @@
-import React, { Fragment } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import React, { Fragment, useState } from 'react';
+import { Link } from 'gatsby';
+import { Location } from '@reach/router';
+import { MenuAlt3Icon, XIcon, StatusOnlineIcon } from '@heroicons/react/solid';
 
-import Helmet from 'react-helmet';
+import useAllChangelog from '../hooks/use-all-changelog';
+
+import Seo from './seo';
+import Logo from './logo';
+import Twitter from './twitter';
+import GitHub from './github';
 
 const RootElement = ({ children }) => {
-  const {
-    site: {
-      siteMetadata: { url, title, image, language, keywords }
-    },
-    allChangelog: { nodes }
-  } = useStaticQuery(graphql`
-    query MyQuery {
-      site {
-        siteMetadata {
-          url
-          title
-          image
-          language
-          keywords
-        }
-      }
-      allChangelog(sort: { fields: index, order: DESC }, limit: 1) {
-        nodes {
-          frontmatter {
-            date(formatString: "MMMM DD YYYY")
-            version
-            title
-          }
-        }
-      }
-    }
-  `);
+  const changelog = useAllChangelog();
 
-  const { frontmatter } = nodes[0];
+  const [navOpen, setNavOpen] = useState(false);
 
-  const seoTitle = `${title} | ${frontmatter.version}`;
-  const seoDescription = `${frontmatter.title} | ${frontmatter.date}`;
+  const handleNav = () => {
+    setNavOpen(!navOpen);
+  };
 
   return (
     <Fragment>
-      <Helmet>
-        {/* Default / HTML */}
-        <html lang={language} />
-        <title>{seoTitle}</title>
-        <link rel="canonical" href={url} />
+      <Seo />
+      <header className="fixed flex items-center top-0 bg-white px-4 md:px-8 py-4 border-b border-gray-200 w-screen min-h-header z-header">
+        <div className="flex flex-grow justify-between items-center">
+          <Link to="/">
+            <Logo />
+          </Link>
 
-        {/* Primary Meta Tags */}
-        <meta name="title" content={seoTitle} />
-        <meta name="description" content={seoDescription} />
-        <meta name="image" content={image} />
-        <meta name="keywords" content={keywords ? keywords.join(', ') : null} />
+          <div className="block md:hidden">
+            {navOpen ? (
+              <XIcon className="h-5 w-5 cursor-pointer" onClick={handleNav} />
+            ) : (
+              <MenuAlt3Icon
+                className="h-5 w-5 cursor-pointer"
+                onClick={handleNav}
+              />
+            )}
+          </div>
+        </div>
+      </header>
+      <main className="mt-main">
+        <Location>
+          {({ location }) => {
+            const { pathname, hash } = location;
 
-        {/* Open Graph / Facebook  */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={url} />
-        <meta property="og:title" content={seoTitle} />
-        <meta property="og:description" content={seoDescription} />
-        <meta property="og:image" content={image} />
+            return (
+              <nav
+                className={`fixed top-8 shadow-xl md:left-0 h-screen min-w-nav px-6 py-16 text-sm bg-white border-r border-gray-200 z-nav overflow-y-scroll transition-all duration-500 ease-in-out ${
+                  navOpen ? 'left-0' : '-left-96'
+                } `}
+              >
+                <div className="grid gap-2">
+                  <a
+                    className="grid gap-2 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
+                    href="https://twitter.com/GatsbyChangelog"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <Twitter />
+                    @GatsbyChangelog
+                  </a>
+                  <a
+                    className="grid gap-2 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
+                    href="https://github.com/gatsbyjs/gatsby"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <GitHub />
+                    GatsbyJs
+                  </a>
+                  <Link
+                    activeClassName="bg-purple-100 text-gray-800"
+                    className="grid gap-2 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
+                    to="/github-events"
+                  >
+                    <StatusOnlineIcon className="h-7 w-7 cursor-pointer text-brand-primary" />
+                    GitHub Events
+                  </Link>
+                </div>
+                <hr className="border-gray-200 mt-8 mb-8" />
+                {pathname === '/' ? (
+                  <ul>
+                    {changelog.map((node, index) => {
+                      const {
+                        name,
+                        frontmatter: { version }
+                      } = node;
 
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={url} />
-        <meta name="twitter:title" content={seoTitle} />
-        <meta name="twitter:description" content={seoDescription} />
-        <meta name="twitter:image" content={image} />
+                      const isHash = hash === `#${version || name}`;
 
-        {/* favicon */}
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href={`${url}/favicon-16x16.png`}
-          data-react-helmet="true"
+                      return (
+                        <li key={index} className="mb-2">
+                          <Link
+                            to={`#${version || name}`}
+                            className={`block px-2 py-1 rounded ${
+                              isHash
+                                ? 'font-bold bg-purple-100'
+                                : 'hover:underline hover:text-brand-primary'
+                            }`}
+                          >
+                            {`Version: ${version} ${index === 0 ? '*' : ''}`}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : null}
+              </nav>
+            );
+          }}
+        </Location>
+        <div
+          onClick={handleNav}
+          onKeyDown={handleNav}
+          role="button"
+          aria-label="close navigation"
+          tabIndex={0}
+          className={`fixed ${
+            navOpen ? 'cursor-pointer md:hidden' : 'hidden'
+          } w-full h-full bg-black opacity-50 z-lightbox`}
         />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href={`${url}/favicon-32x32.png`}
-          data-react-helmet="true"
-        />
-      </Helmet>
-      {children}
+        <section className="md:ml-sidebar">
+          <div className="px-4 py-4 md:px-20 md:py-8 bg-gray-50">
+            {children}
+          </div>
+        </section>
+      </main>
     </Fragment>
   );
 };

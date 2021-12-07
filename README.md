@@ -10,6 +10,7 @@
 
 [https://github.com/octokit/graphql.js](https://github.com/octokit/graphql.js)
 [https://docs.github.com/en/graphql](https://docs.github.com/en/graphql)
+[https://docs.github.com/en/graphql/overview/explorer](https://docs.github.com/en/graphql/overview/explorer)
 
 ### GitHub Actions - Schedule
 

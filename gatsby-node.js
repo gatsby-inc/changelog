@@ -1,37 +1,6 @@
-const { graphql } = require('@octokit/graphql');
-const remark = require('remark');
-const remarkParse = require('remark-parse');
-const remarkRehype = require('remark-rehype');
-const rehypeStringify = require('rehype-stringify');
-const rehypeAutoLinkHeadings = require('rehype-autolink-headings');
-const rehypeSlug = require('rehype-slug');
-const matter = require('gray-matter');
-
-const graphqlWithAuth = graphql.defaults({
-  headers: {
-    authorization: `token ${process.env.OCTOKIT_PERSONAL_ACCESS_TOKEN}`
-  }
-});
-
-const convertToHTML = async (markdown) => {
-  const grayMatter = matter(markdown);
-
-  const response = await remark()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypeSlug)
-    .use(rehypeAutoLinkHeadings)
-    .use(rehypeStringify)
-    .process(grayMatter.content);
-
-  return String(response);
-};
-
-const transformFrontmatter = (markdown) => {
-  const grayMatter = matter(markdown);
-
-  return grayMatter.data;
-};
+const graphqlWithAuth = require('./src/utils/graphql-with-auth');
+const convertToHTML = require('./src/utils/convert-to-html');
+const transformFrontmatter = require('./src/utils/tranform-frontmatter');
 
 exports.sourceNodes = async ({
   actions: { createNode },
