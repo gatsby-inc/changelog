@@ -2,7 +2,7 @@ import React from 'react';
 
 const GitHub = () => {
   return (
-    <svg width="24px" height="24px" viewBox="0 0 48 48" fill="#000000">
+    <svg width="16px" height="16px" viewBox="0 0 48 48" fill="#000000">
       <g>
         <path
           d="M23.9985104,1.5407293c-12.7153177,0-23.0264225,10.3098326-23.0264225,23.0292511

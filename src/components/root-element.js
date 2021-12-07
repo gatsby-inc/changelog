@@ -52,24 +52,6 @@ const RootElement = ({ children }) => {
                 } `}
               >
                 <div className="grid gap-2">
-                  <a
-                    className="grid gap-2 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
-                    href="https://twitter.com/GatsbyChangelog"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <Twitter />
-                    @GatsbyChangelog
-                  </a>
-                  <a
-                    className="grid gap-2 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
-                    href="https://github.com/gatsbyjs/gatsby"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <GitHub />
-                    GatsbyJs
-                  </a>
                   <Link
                     onClick={handleNav}
                     activeClassName="bg-purple-100 text-gray-800"
@@ -121,6 +103,27 @@ const RootElement = ({ children }) => {
                     );
                   })}
                 </ul>
+                <hr className="border-gray-200 mt-8 mb-8" />
+                <div className="grid gap-2">
+                  <a
+                    className="grid gap-1 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
+                    href="https://twitter.com/GatsbyChangelog"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <Twitter />
+                    @GatsbyChangelog
+                  </a>
+                  <a
+                    className="grid gap-1 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
+                    href="https://github.com/gatsbyjs/gatsby"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <GitHub />
+                    GatsbyJs
+                  </a>
+                </div>
               </nav>
             );
           }}
