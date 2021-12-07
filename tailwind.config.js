@@ -29,6 +29,7 @@ module.exports = {
         }
       },
       gridTemplateColumns: {
+        ['auto-1fr']: 'auto-1fr',
         ['1fr-auto']: '1fr auto',
         ['auto-1fr']: 'auto 1fr'
       },
@@ -36,6 +37,9 @@ module.exports = {
         main: theme('minHeight.header'),
         sidebar: theme('minWidth.nav')
       }),
+      height: {
+        main: 'calc(100vh - 220px)'
+      },
       minWidth: {
         nav: 200
       },
