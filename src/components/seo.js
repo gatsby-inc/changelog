@@ -36,6 +36,7 @@ const Seo = () => {
 
   const seoTitle = `${title} | ${frontmatter.version}`;
   const seoDescription = `${frontmatter.title} | ${frontmatter.date}`;
+  const seoImage = `${url}/${image}`;
 
   return (
     <Helmet>
@@ -47,7 +48,7 @@ const Seo = () => {
       {/* Primary Meta Tags */}
       <meta name="title" content={seoTitle} />
       <meta name="description" content={seoDescription} />
-      <meta name="image" content={image} />
+      <meta name="image" content={seoImage} />
       <meta name="keywords" content={keywords ? keywords.join(', ') : null} />
 
       {/* Open Graph / Facebook  */}
@@ -55,14 +56,14 @@ const Seo = () => {
       <meta property="og:url" content={url} />
       <meta property="og:title" content={seoTitle} />
       <meta property="og:description" content={seoDescription} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={seoImage} />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={url} />
       <meta name="twitter:title" content={seoTitle} />
       <meta name="twitter:description" content={seoDescription} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={seoImage} />
 
       {/* favicon */}
       <link
