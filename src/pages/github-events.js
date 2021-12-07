@@ -46,8 +46,6 @@ const Page = ({ serverData: { pullRequests, watchers, issues } }) => {
   );
 };
 
-export default Page;
-
 export async function getServerData() {
   const {
     repository: { pullRequests, watchers, issues }
@@ -91,3 +89,5 @@ export async function getServerData() {
     }
   };
 }
+
+export default Page;
