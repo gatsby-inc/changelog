@@ -43,7 +43,7 @@ const RootElement = ({ children }) => {
       <main className="mt-main">
         <Location>
           {({ location }) => {
-            const { pathname, hash } = location;
+            const { hash } = location;
 
             return (
               <nav
@@ -80,33 +80,31 @@ const RootElement = ({ children }) => {
                   </Link>
                 </div>
                 <hr className="border-gray-200 mt-8 mb-8" />
-                {pathname === '/' ? (
-                  <ul>
-                    {changelog.map((node, index) => {
-                      const {
-                        name,
-                        frontmatter: { version }
-                      } = node;
+                <ul>
+                  {changelog.map((node, index) => {
+                    const {
+                      name,
+                      frontmatter: { version }
+                    } = node;
 
-                      const isHash = hash === `#${version || name}`;
+                    const isHash = hash === `#${version || name}`;
 
-                      return (
-                        <li key={index} className="mb-2">
-                          <Link
-                            to={`#${version || name}`}
-                            className={`block px-2 py-1 rounded ${
-                              isHash
-                                ? 'font-bold bg-purple-100'
-                                : 'hover:underline hover:text-brand-primary'
-                            }`}
-                          >
-                            {`Version: ${version} ${index === 0 ? '*' : ''}`}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                ) : null}
+                    return (
+                      <li key={index} className="mb-2">
+                        <Link
+                          to={`/#${version || name}`}
+                          className={`block px-2 py-1 rounded ${
+                            isHash
+                              ? 'font-bold bg-purple-100'
+                              : 'hover:underline hover:text-brand-primary'
+                          }`}
+                        >
+                          {`Version: ${version} ${index === 0 ? '*' : ''}`}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
               </nav>
             );
           }}
