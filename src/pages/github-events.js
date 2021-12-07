@@ -29,7 +29,7 @@ const Page = ({ serverData: { gatsby, changelog } }) => {
       </RepoEvents>
       <RepoEvents
         repoName="Changelog"
-        color="brand-primary"
+        color="brand-default"
         background="white"
         inner="purple-50"
       >
