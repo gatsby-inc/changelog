@@ -82,7 +82,7 @@ export async function getServerData() {
     {
       owner: GATSBY_JS,
       repo: GATSBY,
-      per_page: 3
+      per_page: 100
     }
   );
 
