@@ -1,7 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'gatsby';
 import { Location } from '@reach/router';
-import { MenuAlt3Icon, XIcon, StatusOnlineIcon } from '@heroicons/react/solid';
+import {
+  MenuAlt3Icon,
+  XIcon,
+  StatusOnlineIcon,
+  AnnotationIcon
+} from '@heroicons/react/solid';
 
 import useAllChangelog from '../hooks/use-all-changelog';
 
@@ -54,12 +59,21 @@ const RootElement = ({ children }) => {
                 <div className="grid gap-2">
                   <Link
                     onClick={handleNav}
-                    activeClassName="bg-purple-100 text-gray-800"
-                    className="grid gap-2 grid-cols-auto-1fr items-center text-sm text-gray-400 transition-all hover:text-gray-800 hover:bg-purple-100 py-1 px-2 rounded"
+                    activeClassName="bg-purple-100"
+                    className="grid gap-2 grid-cols-auto-1fr items-center text-sm transition-all hover:bg-purple-100 py-1 px-2 rounded"
                     to="/github-events"
                   >
                     <StatusOnlineIcon className="h-7 w-7 cursor-pointer text-brand-primary" />
                     GitHub Events
+                  </Link>
+                  <Link
+                    onClick={handleNav}
+                    activeClassName="bg-purple-100"
+                    className="grid gap-2 grid-cols-auto-1fr items-center text-sm transition-all hover:bg-purple-100 py-1 px-2 rounded"
+                    to="/twitter-feed"
+                  >
+                    <AnnotationIcon className="h-7 w-7 cursor-pointer text-brand-primary" />
+                    Twitter Feed
                   </Link>
                 </div>
                 <hr className="border-gray-200 mt-8 mb-8" />
