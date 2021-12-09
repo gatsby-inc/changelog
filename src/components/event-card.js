@@ -52,7 +52,6 @@ const EventCard = ({ type, login, date, repo, commits }) => {
                   <li key={index}>
                     <small className="text-gray-500 font-light">
                       <a
-                        className="break-all"
                         href={`${baseUrl}/${repo.name}/commit/${commit.sha}`}
                         target="_blank"
                         rel="noreferrer"
