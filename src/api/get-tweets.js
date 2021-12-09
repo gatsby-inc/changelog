@@ -8,7 +8,11 @@ export default async function hander(req, res) {
       res.status(400).json({ message: 'id not found' });
     }
 
-    const { data } = await twitter.get(`users/${id}/tweets`);
+    const { data } = await twitter.get(`users/${id}/tweets`, {
+      tweet: {
+        fields: 'created_at,author_id,entities'
+      }
+    });
 
     res.status(200).json({
       message: 'A ok!',
