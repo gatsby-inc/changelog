@@ -44,11 +44,7 @@ const Page = () => {
           <div className="grid gap-2 shadow-lg p-8 bg-white rounded-lg ">
             <div className="grid gap-2 text-color-800">
               <div className="grid grid-cols-1fr-auto">
-                <img
-                  className="rounded-full overflow-hidden"
-                  src={user.profile_image_url}
-                  alt={user.username}
-                />
+                <img className="rounded-full overflow-hidden" src={user.profile_image_url} alt={user.username} />
                 <div className="flex items-center">
                   <a
                     className="bg-brand-default hover:bg-brand-primary transition-all px-4 py-2 text-white text-sm rounded-full font-bold"
@@ -67,12 +63,7 @@ const Page = () => {
                 </div>
                 <div>
                   <p className="text-md">{user.description}</p>
-                  <a
-                    className="text-sm text-brand-primary"
-                    href={user.entities.url.urls[0].expanded_url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a className="text-sm text-brand-primary" href={user.entities.url.urls[0].expanded_url} target="_blank" rel="noreferrer">
                     {user.entities.url.urls[0].expanded_url}
                   </a>
                 </div>
@@ -86,20 +77,12 @@ const Page = () => {
           <ul className="grid gap-8">
             {tweets.map((tweet, index) => {
               const { text, author_id, created_at, entities } = tweet;
+              console.log(entities);
               return (
-                <li
-                  key={index}
-                  className="grid gap-4 shadow p-8 bg-white rounded-lg"
-                >
-                  <small className="font-bold text-gray-400">
-                    {new Date(created_at).toLocaleDateString()}
-                  </small>
+                <li key={index} className="grid gap-4 shadow p-8 bg-white rounded-lg">
+                  <small className="font-bold text-gray-400">{new Date(created_at).toLocaleDateString()}</small>
                   <pre className="font-sans whitespace-pre-wrap">{text}</pre>
-                  <img
-                    className="border border-gray-200 rounded overflow-hidden"
-                    alt={author_id}
-                    src={entities.urls[0].images[0].url}
-                  />
+                  {/* <img className="border border-gray-200 rounded overflow-hidden" alt={author_id} src={entities.urls[0].images[0].url} /> */}
                 </li>
               );
             })}
