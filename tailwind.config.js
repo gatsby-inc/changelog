@@ -2,12 +2,7 @@ module.exports = {
   mode: 'jit',
   purge: {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
-    safelist: [
-      'text-white',
-      'text-brand-default',
-      'bg-brand-default',
-      'bg-purple-50'
-    ]
+    safelist: ['text-white', 'text-brand-default', 'bg-brand-default', 'bg-purple-50']
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -16,6 +11,9 @@ module.exports = {
         DEFAULT: {
           css: {
             color: theme('colors.brand.text'),
+            a: {
+              color: theme('colors.brand.default')
+            },
             code: {
               padding: theme('spacing.1'),
               fontWeight: theme('fontWeight.normal'),

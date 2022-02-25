@@ -14,12 +14,30 @@ const graphqlWithAuth = graphql.defaults({
   }
 });
 
+const BASE_URL = 'https://gatsbyjs.com';
+const PATH = '/';
+
 const convertToHTML = async (markdown) => {
   const grayMatter = matter(markdown);
-
   const response = await remark()
     .use(remarkParse)
     .use(remarkRehype)
+    .use(() => (tree) => {
+      tree.children.forEach((obj) => {
+        if (obj.children) {
+          // TODO this probably needs to be recursive and find all obj with children and then look for tagName === 'a'
+          obj.children.forEach((tag) => {
+            if (tag.tagName === 'a') {
+              if (tag.properties.href.startsWith(PATH)) {
+                tag.properties.href = `${BASE_URL}${tag.properties.href}`;
+              }
+              tag.properties.target = '_blank';
+              tag.properties.rel = 'noopener';
+            }
+          });
+        }
+      });
+    })
     .use(rehypeSlug)
     .use(rehypeAutoLinkHeadings)
     .use(rehypeStringify)
@@ -34,10 +52,7 @@ const transformFrontmatter = (markdown) => {
   return grayMatter.data;
 };
 
-exports.sourceNodes = async ({
-  actions: { createNode },
-  createContentDigest
-}) => {
+exports.sourceNodes = async ({ actions: { createNode }, createContentDigest }) => {
   const md = fs.readFileSync('./src/content/intro.md', 'utf8');
 
   createNode({
