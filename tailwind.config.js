@@ -1,10 +1,6 @@
 module.exports = {
-  mode: 'jit',
-  purge: {
-    content: ['./src/**/*.{js,jsx,ts,tsx}'],
-    safelist: ['text-white', 'text-brand-default', 'bg-brand-default', 'bg-purple-50']
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  safelist: ['text-white', 'text-brand-default', 'bg-brand-default', 'bg-purple-50'],
   theme: {
     extend: {
       typography: (theme) => ({
@@ -59,9 +55,6 @@ module.exports = {
         header: 999
       }
     }
-  },
-  variants: {
-    extend: {}
   },
   plugins: [require('@tailwindcss/typography')]
 };

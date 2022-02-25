@@ -63,7 +63,12 @@ const Page = () => {
                 </div>
                 <div>
                   <p className="text-md">{user.description}</p>
-                  <a className="text-sm text-brand-primary" href={user.entities.url.urls[0].expanded_url} target="_blank" rel="noreferrer">
+                  <a
+                    className="text-sm text-brand-primary"
+                    href={user.entities.url.urls[0].expanded_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     {user.entities.url.urls[0].expanded_url}
                   </a>
                 </div>
@@ -76,13 +81,12 @@ const Page = () => {
           </div>
           <ul className="grid gap-8">
             {tweets.map((tweet, index) => {
-              const { text, author_id, created_at, entities } = tweet;
+              const { text, created_at, entities } = tweet;
               console.log(entities);
               return (
                 <li key={index} className="grid gap-4 shadow p-8 bg-white rounded-lg">
                   <small className="font-bold text-gray-400">{new Date(created_at).toLocaleDateString()}</small>
                   <pre className="font-sans whitespace-pre-wrap">{text}</pre>
-                  {/* <img className="border border-gray-200 rounded overflow-hidden" alt={author_id} src={entities.urls[0].images[0].url} /> */}
                 </li>
               );
             })}
