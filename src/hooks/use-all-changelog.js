@@ -6,7 +6,7 @@ const useAllChangelog = () => {
   } = useStaticQuery(graphql`
     query {
       allChangelog(
-        sort: { fields: index, order: DESC }
+        sort: { fields: frontmatter___date, order: DESC }
         filter: { frontmatter: { version: { ne: null } } }
       ) {
         nodes {
