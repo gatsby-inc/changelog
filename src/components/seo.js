@@ -20,8 +20,13 @@ const Seo = () => {
           keywords
         }
       }
-      allChangelog(sort: { fields: index, order: DESC }, limit: 1) {
+      allChangelog(
+        sort: { fields: frontmatter___date, order: DESC }
+        filter: { frontmatter: { version: { ne: null } } }
+        limit: 1
+      ) {
         nodes {
+          name
           frontmatter {
             date(formatString: "MMMM DD YYYY")
             version
@@ -31,6 +36,8 @@ const Seo = () => {
       }
     }
   `);
+
+  console.log(nodes);
 
   const { frontmatter } = nodes[0];
 
@@ -66,20 +73,8 @@ const Seo = () => {
       <meta name="twitter:image" content={seoImage} />
 
       {/* favicon */}
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href={`${url}/favicon-16x16.png`}
-        data-react-helmet="true"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href={`${url}/favicon-32x32.png`}
-        data-react-helmet="true"
-      />
+      <link rel="icon" type="image/png" sizes="16x16" href={`${url}/favicon-16x16.png`} data-react-helmet="true" />
+      <link rel="icon" type="image/png" sizes="32x32" href={`${url}/favicon-32x32.png`} data-react-helmet="true" />
     </Helmet>
   );
 };
