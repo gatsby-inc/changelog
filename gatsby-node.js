@@ -127,3 +127,10 @@ exports.sourceNodes = async ({ actions: { createNode }, createContentDigest }) =
     }
   });
 };
+
+exports.createPages = ({ actions: { createRedirect } }) => {
+  createRedirect({
+    fromPath: '/github-commits/*',
+    toPath: '/github-activity/*'
+  });
+};

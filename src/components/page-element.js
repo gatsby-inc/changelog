@@ -51,7 +51,7 @@ const PageElement = ({ children, location: { hash } }) => {
               onClick={handleNav}
               activeClassName="bg-purple-100"
               className="grid gap-2 grid-cols-auto-1fr items-center text-sm transition-all hover:bg-purple-100 py-1 px-2 rounded"
-              to="/github-commits"
+              to="/github-activity"
             >
               <PresentationChartLineIcon className="h-7 w-7 cursor-pointer text-brand-primary" />
               GitHub Activity
