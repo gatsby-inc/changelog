@@ -57,16 +57,13 @@ export const Head = () => {
 };
 
 export async function getServerData() {
+  const { octokit } = require('../clients/github-client');
+
   const GATSBY_JS = 'gatsbyjs';
   const GATSBY = 'gatsby';
 
   const GATSBY_INC = 'gatsby-inc';
   const CHANGELOG = 'changelog';
-
-  const octokit = new Octokit({
-    auth: process.env.OCTOKIT_PERSONAL_ACCESS_TOKEN,
-    userAgent: 'Changelog'
-  });
 
   const { data: gatsbyRepo } = await octokit.request(`GET /repos/{owner}/{repo}`, {
     owner: GATSBY_JS,

@@ -41,7 +41,7 @@ const EventCard = ({ type, login, date, repo, commits }) => {
               <ul className="list-disc list-inside pl-3">
                 {commits.map((commit, index) => (
                   <li key={index}>
-                    <small className="text-gray-500 font-light">
+                    <small className="text-gray-500 font-light break-all">
                       <a
                         href={`${baseUrl}/${repo.name}/commit/${commit.sha}`}
                         target="_blank"

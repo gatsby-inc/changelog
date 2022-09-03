@@ -1,4 +1,4 @@
-const { twitter } = require('../twitter-client');
+const { twitter } = require('../clients/twitter-client');
 
 export default async function hander(req, res) {
   const { username } = JSON.parse(req.body);
@@ -10,8 +10,7 @@ export default async function hander(req, res) {
 
     const { data } = await twitter.get(`users/by/username/${username}`, {
       user: {
-        fields:
-          'created_at,description,entities,id,name,profile_image_url,protected,public_metrics,url,username'
+        fields: 'created_at,description,entities,id,name,profile_image_url,protected,public_metrics,url,username'
       }
     });
 

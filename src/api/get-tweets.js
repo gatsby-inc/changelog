@@ -1,4 +1,4 @@
-const { twitter } = require('../twitter-client');
+const { twitter } = require('../clients/twitter-client');
 
 export default async function hander(req, res) {
   const { id } = JSON.parse(req.body);

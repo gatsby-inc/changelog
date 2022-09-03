@@ -59,7 +59,7 @@ const Page = () => {
               <div className="grid gap-2">
                 <div>
                   <h2 className="text-lg font-bold">{user.username}</h2>
-                  <h5 className="text-xs font-bold text-gray-600">{`@${user.username}`}</h5>
+                  <h3 className="text-xs font-bold text-gray-600">{`@${user.username}`}</h3>
                 </div>
                 <div>
                   <p className="text-md">{user.description}</p>
@@ -75,22 +75,24 @@ const Page = () => {
               </div>
             </div>
             <div className="grid grid-cols-auto-1fr gap-2">
-              <h6 className="text-sm font-bold">{`${user.public_metrics.followers_count} Followers`}</h6>
-              <h6 className="text-sm font-bold">{`${user.public_metrics.following_count} Following`}</h6>
+              <h4 className="text-sm font-bold">{`${user.public_metrics.followers_count} Followers`}</h4>
+              <h4 className="text-sm font-bold">{`${user.public_metrics.following_count} Following`}</h4>
             </div>
           </div>
-          <ul className="grid gap-8">
-            {tweets.map((tweet, index) => {
-              const { text, created_at, entities } = tweet;
-              console.log(entities);
-              return (
-                <li key={index} className="grid gap-4 shadow p-8 bg-white rounded-lg">
-                  <small className="font-bold text-gray-400">{new Date(created_at).toLocaleDateString()}</small>
-                  <pre className="font-sans whitespace-pre-wrap">{text}</pre>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="sm:mx-8">
+            <h5 className="mb-3 font-bold text-gray-600">Latest Tweets</h5>
+            <ul className="grid gap-8">
+              {tweets.map((tweet, index) => {
+                const { text, created_at } = tweet;
+                return (
+                  <li key={index} className="grid gap-4 shadow p-8 bg-white/80 rounded-lg">
+                    <small className="font-bold text-brand-primary">{new Date(created_at).toLocaleDateString()}</small>
+                    <p className="font-sans whitespace-pre-wrap">{text}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       )}
     </Fragment>

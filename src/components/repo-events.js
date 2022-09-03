@@ -2,8 +2,6 @@ import React from 'react';
 import { TerminalIcon } from '@heroicons/react/solid';
 
 const RepoEvents = ({ color, background, inner, logo, repo, children }) => {
-  console.log(repo);
-
   const {
     owner: { login },
     name,
