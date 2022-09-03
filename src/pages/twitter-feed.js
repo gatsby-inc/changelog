@@ -11,7 +11,7 @@ const Page = () => {
 
   useEffect(() => {
     const getTwitter = async () => {
-      const tweet_response = await fetch('/api/get-tweets', {
+      const tweet_response = await fetch('/api/twitter/tweets', {
         method: 'POST',
         // https://codeofaninja.com/tools/find-twitter-id/;
         body: JSON.stringify({ id: '1456240477783695360' })
@@ -19,7 +19,7 @@ const Page = () => {
 
       const tweet_data = await tweet_response.json();
 
-      const user_response = await fetch('/api/get-twitter-user', {
+      const user_response = await fetch('/api/twitter/user', {
         method: 'POST',
         body: JSON.stringify({ username: 'GatsbyChangelog' })
       });
