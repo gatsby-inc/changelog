@@ -64,7 +64,7 @@ const Page = () => {
                 <div>
                   <p className="text-md">{user.description}</p>
                   <a
-                    className="text-sm text-brand-primary"
+                    className="text-sm text-brand-primary hover:text-brand-secondary"
                     href={user.entities.url.urls[0].expanded_url}
                     target="_blank"
                     rel="noreferrer"

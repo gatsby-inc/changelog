@@ -1,5 +1,4 @@
 import React from 'react';
-import { Octokit } from '@octokit/rest';
 
 import Seo from '../components/seo';
 import RepoEvents from '../components/repo-events';

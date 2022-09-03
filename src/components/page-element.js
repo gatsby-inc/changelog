@@ -1,6 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'gatsby';
-import { MenuAlt3Icon, XIcon, StatusOnlineIcon, AnnotationIcon } from '@heroicons/react/solid';
+import {
+  MenuAlt3Icon,
+  XIcon,
+  StatusOnlineIcon,
+  AnnotationIcon,
+  PresentationChartLineIcon
+} from '@heroicons/react/solid';
 
 import useAllChangelog from '../hooks/use-all-changelog';
 
@@ -41,6 +47,15 @@ const PageElement = ({ children, location: { hash } }) => {
           } `}
         >
           <div className="grid gap-2">
+            <Link
+              onClick={handleNav}
+              activeClassName="bg-purple-100"
+              className="grid gap-2 grid-cols-auto-1fr items-center text-sm transition-all hover:bg-purple-100 py-1 px-2 rounded"
+              to="/github-commits"
+            >
+              <PresentationChartLineIcon className="h-7 w-7 cursor-pointer text-brand-primary" />
+              GitHub Activity
+            </Link>
             <Link
               onClick={handleNav}
               activeClassName="bg-purple-100"
@@ -131,7 +146,7 @@ const PageElement = ({ children, location: { hash } }) => {
           } w-full h-full bg-black opacity-50 z-lightbox`}
         />
         <section className="md:ml-sidebar bg-gray-50">
-          <div className="flex flex-col items-center justify-center max-w-4xl mx-auto px-4 py-4 h-full min-h-[calc(100vh-3rem)]">
+          <div className="flex flex-col items-center max-w-6xl mx-auto px-4 py-8 h-full min-h-[calc(100vh-3rem)]">
             {children}
           </div>
         </section>

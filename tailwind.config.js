@@ -28,7 +28,8 @@ module.exports = {
         brand: {
           text: '#36313d',
           default: '#663399',
-          primary: '#7026B9'
+          primary: '#7026B9',
+          secondary: '#3fa9f5'
         }
       },
       gridTemplateColumns: {
