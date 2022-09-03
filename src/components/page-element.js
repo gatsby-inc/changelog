@@ -1,11 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'gatsby';
-import { Location } from '@reach/router';
 import { MenuAlt3Icon, XIcon, StatusOnlineIcon, AnnotationIcon } from '@heroicons/react/solid';
 
 import useAllChangelog from '../hooks/use-all-changelog';
 
-import Seo from './seo';
 import Logo from './logo';
 import Twitter from './twitter';
 import GitHub from './github';
@@ -22,7 +20,6 @@ const PageElement = ({ children, location }) => {
 
   return (
     <Fragment>
-      <Seo />
       <header className="fixed flex items-center top-0 bg-white px-4 md:px-8 py-4 border-b border-gray-200 w-screen min-h-header z-header">
         <div className="flex flex-grow justify-between items-center">
           <Link onClick={handleNav} to="/">

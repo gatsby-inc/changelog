@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 
+import Seo from '../components/seo';
+
 import Loading from '../components/loading';
 
 const Page = () => {
@@ -96,3 +98,7 @@ const Page = () => {
 };
 
 export default Page;
+
+export const Head = () => {
+  return <Seo />;
+};

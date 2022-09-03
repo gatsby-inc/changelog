@@ -1,6 +1,7 @@
 import React from 'react';
 import { Octokit } from '@octokit/rest';
 
+import Seo from '../components/seo';
 import RepoEvents from '../components/repo-events';
 import EventCard from '../components/event-card';
 import GatsbyLogo from '../components/gatsby-logo';
@@ -50,6 +51,10 @@ const Page = ({ serverData: { gatsby, changelog } }) => {
 };
 
 export default Page;
+
+export const Head = () => {
+  return <Seo />;
+};
 
 export async function getServerData() {
   const GATSBY_JS = 'gatsbyjs';

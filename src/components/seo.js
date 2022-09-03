@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
-
-import Helmet from 'react-helmet';
 
 const Seo = () => {
   const {
@@ -46,7 +44,7 @@ const Seo = () => {
   const seoImage = `${url}/${image}`;
 
   return (
-    <Helmet>
+    <Fragment>
       {/* Default / HTML */}
       <html lang={language} />
       <title>{seoTitle}</title>
@@ -75,7 +73,7 @@ const Seo = () => {
       {/* favicon */}
       <link rel="icon" type="image/png" sizes="16x16" href={`${url}/favicon-16x16.png`} data-react-helmet="true" />
       <link rel="icon" type="image/png" sizes="32x32" href={`${url}/favicon-32x32.png`} data-react-helmet="true" />
-    </Helmet>
+    </Fragment>
   );
 };
 

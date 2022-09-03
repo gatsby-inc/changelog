@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
+import Seo from '../components/seo';
+
 import useAllChangelog from '../hooks/use-all-changelog';
 import useIntro from '../hooks/use-intro';
 
@@ -44,3 +46,7 @@ const Page = () => {
 };
 
 export default Page;
+
+export const Head = () => {
+  return <Seo />;
+};

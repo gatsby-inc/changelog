@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
+import Seo from '../components/seo';
+
 const Page = () => {
   return (
     <main>
@@ -11,3 +13,7 @@ const Page = () => {
 };
 
 export default Page;
+
+export const Head = () => {
+  return <Seo />;
+};

@@ -11,5 +11,5 @@ module.exports = {
     keywords: ['gatsby', 'gatsbyjs'],
     repo: 'https://github.com/gatsby-inc/changelog'
   },
-  plugins: ['gatsby-plugin-postcss', 'gatsby-plugin-react-helmet']
+  plugins: ['gatsby-plugin-postcss']
 };
