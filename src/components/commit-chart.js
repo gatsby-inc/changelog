@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
+import PropTypes from 'prop-types';
 
+const INITIAL_TYPE = 'line';
+const ALT_TYPE = 'bar';
 const CHART_MAX_WIDTH = 600;
 const CHART_MAX_HEIGHT = 250;
 
-const LineChart = ({ data }) => {
+const CommitChart = ({ data, type, id, href }) => {
+  const [isChecked, setIsChecked] = useState(type !== INITIAL_TYPE);
+
+  const handleChange = (event) => {
+    setIsChecked(!isChecked);
+  };
+
   const max_x = data.total_weeks * (data.week_length - 1);
   const max_y = data.day_commit_max;
   const pad_left = 20;
@@ -32,6 +41,37 @@ const LineChart = ({ data }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg">
+      <div className="flex items-center justify-between px-6 pt-6">
+        <div className="grid">
+          <h2 className="text-lg font-bold text-gray-800 capitalize">{id}</h2>
+          <small className="text-xs hidden sm:block">
+            <a
+              href={`https://${href}`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-brand-primary hover:text-brand-secondary"
+            >
+              {href}
+            </a>
+          </small>
+        </div>
+        <div>
+          <label htmlFor={id} className="inline-flex relative items-center cursor-pointer">
+            <input
+              type="checkbox"
+              value=""
+              id={id}
+              className="sr-only peer"
+              onChange={handleChange}
+              checked={isChecked}
+            />
+            <span className="mr-3 text-sm font-medium text-gray-400 capitalize w-[24px]">
+              {isChecked ? ALT_TYPE : INITIAL_TYPE}
+            </span>
+            <div className="w-9 h-5 bg-blue-500 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-yellow-400 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[38px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-primary" />
+          </label>
+        </div>
+      </div>
       <svg viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
         {x_guides.map((n, i) => {
           const ratio = i / x_guides.length;
@@ -108,10 +148,35 @@ const LineChart = ({ data }) => {
             <stop offset="100%" stopColor="#3fa9f5" />
           </linearGradient>
         </defs>
-        <polyline fill="none" stroke="url(#linear)" strokeWidth={0.8} points={points.join(' ')} />
+        {isChecked ? (
+          <Fragment>
+            {points.map((point, index) => {
+              const plot = points[index].split(',');
+              const x = plot[0];
+              const y = plot[1];
+              const height = CHART_MAX_HEIGHT - y - pad_top;
+              return <rect key={index} x={x} y={y} width={1} height={height} fill="url(#linear)" />;
+            })}
+          </Fragment>
+        ) : (
+          <polyline fill="none" stroke="url(#linear)" strokeWidth={0.8} points={points.join(' ')} />
+        )}
       </svg>
     </div>
   );
 };
 
-export default LineChart;
+CommitChart.defaultProps = {
+  type: INITIAL_TYPE
+};
+
+CommitChart.propTypes = {
+  /** The type of chart */
+  type: PropTypes.oneOfType([INITIAL_TYPE, ALT_TYPE]),
+  /** The id required for the input label */
+  id: PropTypes.string.isRequired,
+  /** The link */
+  href: PropTypes.string.isRequired
+};
+
+export default CommitChart;

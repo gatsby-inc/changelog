@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 import Seo from '../components/seo';
 import Loading from '../components/loading';
-import LineChart from '../components/line-chart';
+import CommitChart from '../components/commit-chart';
 
 const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,34 +41,8 @@ const Page = () => {
         <div className="w-full grid gap-8">
           <h1 className="text-3xl font-black text-brand-primary">12 Month Commit Activity</h1>
           <div className="grid gap-16">
-            <div className="grid gap-4">
-              <h2 className="text-lg font-bold text-gray-800">Gatsby</h2>
-              <LineChart data={gatsby} />
-              <small className="text-xs">
-                <a
-                  href="https://github.com/gatsbyjs/gatsby"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-brand-primary hover:text-brand-secondary"
-                >
-                  github.com/gatsbyjs/gatsby
-                </a>
-              </small>
-            </div>
-            <div className="grid gap-4">
-              <h2 className="text-lg font-bold text-gray-800">Changelog</h2>
-              <LineChart data={changelog} />
-              <small className="text-xs">
-                <a
-                  href="https://github.com/gatsby-inc/changelog"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-brand-primary hover:text-brand-secondary"
-                >
-                  github.com/gatsby-inc/changelog
-                </a>
-              </small>
-            </div>
+            <CommitChart data={gatsby} id="gatsby" href="github.com/gatsbyjs/gatsby" />
+            <CommitChart data={changelog} type="bar" id="changelog" href="github.com/gatsby-inc/changelog" />
           </div>
         </div>
       )}
