@@ -17,16 +17,9 @@ const RepoEvents = ({ color, background, inner, logo, repo, children }) => {
         <div className="grid gap-4 grid-cols-auto-1fr">
           <div>{logo}</div>
           <div className="grid gap-2">
-            <div className={`text-xl font-bold text-${color}`}>
-              {`${login}/${name}`}
-            </div>
+            <div className={`text-xl font-bold text-${color}`}>{`${login}/${name}`}</div>
             <div className={`text-sm text-${color}`}>{description}</div>
-            <a
-              href={html_url}
-              target="_blank"
-              rel="noreferrer"
-              className={`text-sm text-${color}`}
-            >
+            <a href={html_url} target="_blank" rel="noreferrer" className={`text-sm text-${color}`}>
               {html_url}
             </a>
           </div>
@@ -39,9 +32,7 @@ const RepoEvents = ({ color, background, inner, logo, repo, children }) => {
         </div>
       </div>
       <article className={`bg-${inner} rounded-lg shadow-inner py-0.5`}>
-        <div className="p-2 sm:p-6 overflow-y-auto overflow-x-hidden h-main">
-          {children}
-        </div>
+        <div className="p-2 overflow-y-auto overflow-x-hidden h-main">{children}</div>
       </article>
     </section>
   );

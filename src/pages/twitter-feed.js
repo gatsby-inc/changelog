@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import Loading from '../components/loading';
 
@@ -34,11 +34,9 @@ const Page = () => {
   }, []);
 
   return (
-    <div>
+    <Fragment>
       {isLoading ? (
-        <div className="flex place-content-center">
-          <Loading />
-        </div>
+        <Loading />
       ) : (
         <div className="grid gap-16">
           <div className="grid gap-2 shadow-lg p-8 bg-white rounded-lg ">
@@ -93,7 +91,7 @@ const Page = () => {
           </ul>
         </div>
       )}
-    </div>
+    </Fragment>
   );
 };
 

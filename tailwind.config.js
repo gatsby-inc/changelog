@@ -44,7 +44,7 @@ module.exports = {
         main: 'calc(100vh - 340px)'
       },
       minWidth: {
-        nav: 200
+        nav: 220
       },
       minHeight: {
         header: 60

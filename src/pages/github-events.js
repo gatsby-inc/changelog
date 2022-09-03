@@ -8,14 +8,8 @@ import ChangelogLogo from '../components/changelog-logo';
 
 const Page = ({ serverData: { gatsby, changelog } }) => {
   return (
-    <div className="grid lg:grid-cols-2 gap-8">
-      <RepoEvents
-        color="white"
-        background="brand-default"
-        inner="purple-50"
-        logo={<GatsbyLogo />}
-        repo={gatsby.repo}
-      >
+    <div className="grid xl:grid-cols-2 gap-4">
+      <RepoEvents color="white" background="brand-default" inner="purple-50" logo={<GatsbyLogo />} repo={gatsby.repo}>
         {gatsby.events.map((event, index) => {
           const { type, actor, created_at, repo, payload } = event;
           return (
@@ -69,39 +63,27 @@ export async function getServerData() {
     userAgent: 'Changelog'
   });
 
-  const { data: gatsbyRepo } = await octokit.request(
-    `GET /repos/{owner}/{repo}`,
-    {
-      owner: GATSBY_JS,
-      repo: GATSBY
-    }
-  );
+  const { data: gatsbyRepo } = await octokit.request(`GET /repos/{owner}/{repo}`, {
+    owner: GATSBY_JS,
+    repo: GATSBY
+  });
 
-  const { data: gatsbyEvents } = await octokit.request(
-    'GET /repos/{owner}/{repo}/events',
-    {
-      owner: GATSBY_JS,
-      repo: GATSBY,
-      per_page: 100
-    }
-  );
+  const { data: gatsbyEvents } = await octokit.request('GET /repos/{owner}/{repo}/events', {
+    owner: GATSBY_JS,
+    repo: GATSBY,
+    per_page: 100
+  });
 
-  const { data: changelogRepo } = await octokit.request(
-    `GET /repos/{owner}/{repo}`,
-    {
-      owner: GATSBY_INC,
-      repo: CHANGELOG
-    }
-  );
+  const { data: changelogRepo } = await octokit.request(`GET /repos/{owner}/{repo}`, {
+    owner: GATSBY_INC,
+    repo: CHANGELOG
+  });
 
-  const { data: changelogEvents } = await octokit.request(
-    'GET /repos/{owner}/{repo}/events',
-    {
-      owner: GATSBY_INC,
-      repo: CHANGELOG,
-      per_page: 100
-    }
-  );
+  const { data: changelogEvents } = await octokit.request('GET /repos/{owner}/{repo}/events', {
+    owner: GATSBY_INC,
+    repo: CHANGELOG,
+    per_page: 100
+  });
 
   return {
     status: 200,

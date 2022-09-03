@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RootElement from './src/components/root-element';
+import PageElement from './src/components/page-element';
 
 import './src/styles/global.css';
 
@@ -16,6 +16,6 @@ export const onRouteUpdate = ({ location }) => {
   return true;
 };
 
-export const wrapRootElement = ({ element }) => {
-  return <RootElement>{element}</RootElement>;
+export const wrapPageElement = ({ element, props }) => {
+  return <PageElement {...props}>{element}</PageElement>;
 };
