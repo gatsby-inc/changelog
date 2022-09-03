@@ -68,7 +68,7 @@ const CommitChart = ({ data, type, id, href }) => {
             <span className="mr-3 text-sm font-medium text-gray-400 capitalize w-[24px]">
               {isChecked ? ALT_TYPE : INITIAL_TYPE}
             </span>
-            <div className="w-9 h-5 bg-blue-500 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-yellow-400 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[38px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-primary" />
+            <div className="w-9 h-5 bg-blue-500 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-yellow-400 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[38px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-primary" />
           </label>
         </div>
       </div>
@@ -154,7 +154,7 @@ const CommitChart = ({ data, type, id, href }) => {
               const plot = points[index].split(',');
               const x = plot[0];
               const y = plot[1];
-              const height = CHART_MAX_HEIGHT - y - pad_top;
+              const height = CHART_MAX_HEIGHT - y - pad_top - 5;
               return <rect key={index} x={x} y={y} width={1} height={height} fill="url(#linear)" />;
             })}
           </Fragment>
