@@ -4,7 +4,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 const Seo = () => {
   const {
     site: {
-      siteMetadata: { url, title, image, language, keywords }
+      siteMetadata: { url, title, image, keywords }
     },
     allChangelog: { nodes }
   } = useStaticQuery(graphql`
@@ -14,7 +14,6 @@ const Seo = () => {
           url
           title
           image
-          language
           keywords
         }
       }
@@ -35,8 +34,6 @@ const Seo = () => {
     }
   `);
 
-  console.log(nodes);
-
   const { frontmatter } = nodes[0];
 
   const seoTitle = `${title} | ${frontmatter.version}`;
@@ -46,7 +43,6 @@ const Seo = () => {
   return (
     <Fragment>
       {/* Default / HTML */}
-      <html lang={language} />
       <title>{seoTitle}</title>
       <link rel="canonical" href={url} />
 

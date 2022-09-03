@@ -8,8 +8,7 @@ import Logo from './logo';
 import Twitter from './twitter';
 import GitHub from './github';
 
-const PageElement = ({ children, location }) => {
-  const { hash } = location;
+const PageElement = ({ children, location: { hash } }) => {
   const changelog = useAllChangelog();
 
   const [navOpen, setNavOpen] = useState(false);
@@ -81,7 +80,7 @@ const PageElement = ({ children, location }) => {
                 frontmatter: { version }
               } = node;
 
-              const isHash = hash === `#${version || name}`;
+              const isHash = hash ? hash === `#${version || name}` : '';
 
               return (
                 <li key={index} className="mb-2">
