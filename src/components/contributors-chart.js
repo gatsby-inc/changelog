@@ -129,7 +129,7 @@ const ContributorChart = memo(({ data, id, href }) => {
         {tooltip ? (
           <foreignObject
             x={tooltip.x < CHART_MAX_WIDTH / 2 ? tooltip.x : tooltip.x - TOOLTIP_WIDTH}
-            y={TOOLTIP_HEIGHT / 2}
+            y={CHART_MAX_HEIGHT - CHART_MAX_HEIGHT + CHART_MAX_HEIGHT / 2 - TOOLTIP_HEIGHT / 4}
             width={TOOLTIP_WIDTH}
             height={TOOLTIP_HEIGHT}
           >
