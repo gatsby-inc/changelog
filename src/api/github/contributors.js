@@ -1,5 +1,33 @@
 const { octokit } = require('../../clients/github-client');
 
+// Limits the max total
+const CAP = 500;
+
+// Limts the contributors
+const CONTRIBUTOR_LIMIT = 50;
+
+const modifyContributors = (data) => {
+  return data
+    .map((item) => {
+      const {
+        author: { login, html_url, avatar_url, type },
+        total
+      } = item;
+      return {
+        login,
+        html_url,
+        avatar_url,
+        type,
+        capped_total: total > CAP ? CAP : total,
+        total
+      };
+    })
+    .filter((item) => item.type !== 'Bot')
+    .filter((item) => item.login !== 'gatsbybot')
+    .sort((a, b) => b.total - a.total)
+    .slice(0, CONTRIBUTOR_LIMIT);
+};
+
 export default async function (req, res) {
   const { owner, repository } = JSON.parse(req.body);
 
@@ -10,9 +38,13 @@ export default async function (req, res) {
       repo: repository
     });
 
+    const modified_contributors = modifyContributors(data);
+
     res.status(200).json({
       message: 'A ok!',
-      contributors: data
+      contributor_max: modified_contributors[0].capped_total,
+      total_contributors: modified_contributors.length,
+      contributors: modified_contributors
     });
   } catch (error) {
     console.log(error);

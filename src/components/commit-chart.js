@@ -23,7 +23,7 @@ const CommitChart = ({ data, type, id, href }) => {
   const value_size = 5;
   const label_size = 5;
   const date_size = 5;
-  const y_labels = [...Array(data.day_commit_max).keys()].filter((n) => n % 2 === 0);
+  const y_labels = [...Array(max_y).keys()].filter((n) => n % 2 === 0);
   const x_guides = [...Array(10).keys()];
 
   const points = data.commits
@@ -41,7 +41,7 @@ const CommitChart = ({ data, type, id, href }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg">
-      <div className="flex items-center justify-between px-6 pt-6">
+      <div className="flex items-center justify-between p-6">
         <div className="grid">
           <h2 className="text-lg font-bold text-gray-800 capitalize">{id}</h2>
           <small className="text-xs hidden sm:block">
@@ -73,6 +73,13 @@ const CommitChart = ({ data, type, id, href }) => {
         </div>
       </div>
       <svg viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
+        <defs>
+          <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#7026B9" />
+            <stop offset="100%" stopColor="#3fa9f5" />
+          </linearGradient>
+        </defs>
+
         {x_guides.map((n, i) => {
           const ratio = i / x_guides.length;
           const gap = 10;
@@ -108,6 +115,7 @@ const CommitChart = ({ data, type, id, href }) => {
             </text>
           );
         })}
+
         {data.commits.map((point, i) => {
           const { days, date_string } = point;
           const label = days.map((value, v) => {
@@ -142,12 +150,7 @@ const CommitChart = ({ data, type, id, href }) => {
           });
           return label;
         })}
-        <defs>
-          <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#7026B9" />
-            <stop offset="100%" stopColor="#3fa9f5" />
-          </linearGradient>
-        </defs>
+
         {isChecked ? (
           <Fragment>
             {points.map((point, index) => {
@@ -155,7 +158,7 @@ const CommitChart = ({ data, type, id, href }) => {
               const x = plot[0];
               const y = plot[1];
               const height = CHART_MAX_HEIGHT - y - pad_top - 5;
-              return <rect key={index} x={x} y={y} width={1} height={height} fill="url(#linear)" />;
+              return <rect key={index} x={x} y={y} width={1} height={height} fill="url(#linear)" rx={1} />;
             })}
           </Fragment>
         ) : (
@@ -171,9 +174,11 @@ CommitChart.defaultProps = {
 };
 
 CommitChart.propTypes = {
+  /** The API response */
+  data: PropTypes.any.isRequired,
   /** The type of chart */
-  type: PropTypes.oneOfType([INITIAL_TYPE, ALT_TYPE]),
-  /** The id required for the input label */
+  type: PropTypes.oneOf([INITIAL_TYPE, ALT_TYPE]),
+  /** The id required for the chart */
   id: PropTypes.string.isRequired,
   /** The link */
   href: PropTypes.string.isRequired
