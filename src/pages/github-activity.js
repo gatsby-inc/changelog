@@ -7,47 +7,48 @@ import ContributorChart from '../components/contributors-chart';
 
 const Page = () => {
   const [gatsby, setGatsby] = useState(null);
+  const [gatsbyError, setGatsbyError] = useState(false);
   const [changelog, setChangelog] = useState(null);
+  const [changelogError, setChangelogError] = useState(false);
   const [contributers, setContributors] = useState(null);
+  const [contributorsError, setContributorsError] = useState(false);
 
   useEffect(() => {
     const getCommits = async () => {
-      try {
-        const gatsby = await (
-          await fetch('/api/github/commits', {
-            method: 'POST',
-            body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
-          })
-        ).json();
-
+      const gatsby = await (
+        await fetch('/api/github/commits', {
+          method: 'POST',
+          body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
+        })
+      ).json();
+      if (gatsby.status === 200) {
         setGatsby(gatsby);
-      } catch (error) {
-        console.error('error: gatsby commits');
+      } else {
+        setGatsbyError(true);
       }
 
-      try {
-        const changelog = await (
-          await fetch('/api/github/commits', {
-            method: 'POST',
-            body: JSON.stringify({ owner: 'gatsby-inc', repository: 'changelog' })
-          })
-        ).json();
-
+      const changelog = await (
+        await fetch('/api/github/commits', {
+          method: 'POST',
+          body: JSON.stringify({ owner: 'gatsby-inc', repository: 'changelog' })
+        })
+      ).json();
+      if (changelog.status === 200) {
         setChangelog(changelog);
-      } catch (error) {
-        console.eror('error: changelog commits');
+      } else {
+        setChangelogError(true);
       }
 
-      try {
-        const contributers = await (
-          await fetch('/api/github/contributors', {
-            method: 'POST',
-            body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
-          })
-        ).json();
+      const contributers = await (
+        await fetch('/api/github/contributors', {
+          method: 'POST',
+          body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
+        })
+      ).json();
+      if (contributers.status === 200) {
         setContributors(contributers);
-      } catch (error) {
-        console.error('error: gatsby contributers');
+      } else {
+        setContributorsError(true);
       }
     };
 
@@ -62,17 +63,39 @@ const Page = () => {
           <ContributorChart data={contributers} id="gatsby" href="github.com/gatsbyjs/gatsby" />
         </Fragment>
       ) : (
-        <Loading />
+        <Fragment>
+          {contributorsError ? (
+            <div className="border rounded border-red-300 p-2 fontbold text-red-800 bg-red-200">Error</div>
+          ) : (
+            <Loading />
+          )}
+        </Fragment>
       )}
       {gatsby || changelog ? (
         <h2 className="text-3xl font-black text-brand-primary">12 Month Commit Activity</h2>
       ) : null}
       <div className="grid gap-16">
-        {gatsby ? <CommitChart data={gatsby} id="gatsby" href="github.com/gatsbyjs/gatsby" /> : <Loading />}
+        {gatsby ? (
+          <CommitChart data={gatsby} id="gatsby" href="github.com/gatsbyjs/gatsby" />
+        ) : (
+          <Fragment>
+            {gatsbyError ? (
+              <div className="border rounded border-red-300 p-2 fontbold text-red-800 bg-red-200">Error</div>
+            ) : (
+              <Loading />
+            )}
+          </Fragment>
+        )}
         {changelog ? (
           <CommitChart data={changelog} type="bar" id="changelog" href="github.com/gatsby-inc/changelog" />
         ) : (
-          <Loading />
+          <Fragment>
+            {changelogError ? (
+              <div className="border rounded border-red-300 p-2 fontbold text-red-800 bg-red-200">Error</div>
+            ) : (
+              <Loading />
+            )}
+          </Fragment>
         )}
       </div>
     </div>

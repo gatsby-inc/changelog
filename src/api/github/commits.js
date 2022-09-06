@@ -27,15 +27,19 @@ export default async function handler(req, res) {
       repo: repository
     });
 
-    res.status(200).json({
-      message: 'A ok!',
-      day_commit_max: dayCommitMax(data),
-      week_length: 7,
-      total_weeks: data.length,
-      commits: modifyCommits(data)
-    });
+    if (data) {
+      res.status(200).json({
+        message: 'Ok',
+        status: 200,
+        day_commit_max: dayCommitMax(data),
+        week_length: 7,
+        total_weeks: data.length,
+        commits: modifyCommits(data)
+      });
+    } else {
+      throw new Error();
+    }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Error' });
+    res.status(500).json({ message: 'Error', status: 500, error: error });
   }
 }

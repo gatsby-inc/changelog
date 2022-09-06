@@ -38,15 +38,20 @@ export default async function (req, res) {
       repo: repository
     });
 
-    const modified_contributors = modifyContributors(data);
+    if (data) {
+      const modified_contributors = modifyContributors(data);
 
-    res.status(200).json({
-      message: 'A ok!',
-      contributor_max: modified_contributors[0].capped_total,
-      total_contributors: modified_contributors.length,
-      contributors: modified_contributors
-    });
+      res.status(200).json({
+        message: 'Ok',
+        status: 200,
+        contributor_max: modified_contributors[0].capped_total,
+        total_contributors: modified_contributors.length,
+        contributors: modified_contributors
+      });
+    } else {
+      throw new Error();
+    }
   } catch (error) {
-    res.status(500).json({ error: error, message: 'GitHub Error' });
+    res.status(500).json({ message: 'Error', status: 500, error: error });
   }
 }
