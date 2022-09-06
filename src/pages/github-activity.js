@@ -50,10 +50,10 @@ const Page = () => {
       ) : (
         <div className="w-full grid gap-8">
           <h1 className="text-3xl font-black text-brand-primary">{`Top ${contributers.total_contributors} Contributors`}</h1>
-          <ContributorChart data={contributers} id="gatsby" href="github.com/gatsbyjs/gatsby" />
+          {/* <ContributorChart data={contributers} id="gatsby" href="github.com/gatsbyjs/gatsby" /> */}
+          <pre className="font-sans whitespace-pre-wrap">{JSON.stringify(contributers, null, 2)}</pre>
           <h2 className="text-3xl font-black text-brand-primary">12 Month Commit Activity</h2>
           <div className="grid gap-16">
-            {/* <pre className="font-sans whitespace-pre-wrap">{JSON.stringify(contributers, null, 2)}</pre> */}
             <CommitChart data={gatsby} id="gatsby" href="github.com/gatsbyjs/gatsby" />
             <CommitChart data={changelog} type="bar" id="changelog" href="github.com/gatsby-inc/changelog" />
           </div>
