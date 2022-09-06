@@ -32,7 +32,7 @@ export default async function (req, res) {
   const { owner, repository } = JSON.parse(req.body);
 
   try {
-    //https://docs.github.com/en/rest/metrics/statistics#get-all-contributor-commit-activity
+    // https://docs.github.com/en/rest/metrics/statistics#get-all-contributor-commit-activity
     const { data } = await octokit.request('GET /repos/{owner}/{repo}/stats/contributors', {
       owner: owner,
       repo: repository
@@ -47,7 +47,6 @@ export default async function (req, res) {
       contributors: modified_contributors
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Error' });
+    res.status(500).json({ error: error, message: 'GitHub Error' });
   }
 }

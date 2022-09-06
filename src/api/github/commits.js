@@ -1,9 +1,7 @@
 const { octokit } = require('../../clients/github-client');
+const { formatDateString } = require('../../utils/format-date-string');
 
 const dayCommitMax = (data) => Math.max(...[].concat(...data.map((item) => item.days)));
-
-export const formatDateString = (dateString) =>
-  new Date(dateString).toLocaleString('default', { month: '2-digit', year: '2-digit' });
 
 const modifyCommits = (data) => {
   return data.map((item) => {
