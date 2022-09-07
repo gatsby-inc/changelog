@@ -43,7 +43,6 @@ export default async function (req, res) {
 
       res.status(200).json({
         message: 'Ok',
-        status: 200,
         contributor_max: modified_contributors[0].capped_total,
         total_contributors: modified_contributors.length,
         contributors: modified_contributors
@@ -52,6 +51,6 @@ export default async function (req, res) {
       throw new Error();
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error', status: 500, error: error });
+    res.status(500).json({ message: 'Error', error: error });
   }
 }

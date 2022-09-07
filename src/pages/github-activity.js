@@ -1,103 +1,84 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
+
+import { useQuery } from '@tanstack/react-query';
 
 import Seo from '../components/seo';
 import Loading from '../components/loading';
+import Error from '../components/error';
 import CommitChart from '../components/commit-chart';
 import ContributorChart from '../components/contributors-chart';
 
 const Page = () => {
-  const [gatsby, setGatsby] = useState(null);
-  const [gatsbyError, setGatsbyError] = useState(false);
-  const [changelog, setChangelog] = useState(null);
-  const [changelogError, setChangelogError] = useState(false);
-  const [contributers, setContributors] = useState(null);
-  const [contributorsError, setContributorsError] = useState(false);
-
-  useEffect(() => {
-    const getCommits = async () => {
-      const gatsby = await (
+  const gatsby = useQuery(
+    ['gatsby'],
+    async () => {
+      return await (
         await fetch('/api/github/commits', {
           method: 'POST',
           body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
         })
       ).json();
-      if (gatsby.status === 200) {
-        setGatsby(gatsby);
-      } else {
-        setGatsbyError(true);
-      }
+    },
+    {
+      retry: 2
+    }
+  );
 
-      const changelog = await (
+  const changelog = useQuery(
+    ['changelog'],
+    async () => {
+      return await (
         await fetch('/api/github/commits', {
           method: 'POST',
           body: JSON.stringify({ owner: 'gatsby-inc', repository: 'changelog' })
         })
       ).json();
-      if (changelog.status === 200) {
-        setChangelog(changelog);
-      } else {
-        setChangelogError(true);
-      }
+    },
+    {
+      retry: 2
+    }
+  );
 
-      const contributers = await (
+  const contributers = useQuery(
+    ['contributers'],
+    async () => {
+      return await (
         await fetch('/api/github/contributors', {
           method: 'POST',
           body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
         })
       ).json();
-      if (contributers.status === 200) {
-        setContributors(contributers);
-      } else {
-        setContributorsError(true);
-      }
-    };
-
-    getCommits();
-  }, []);
+    },
+    {
+      retry: 2
+    }
+  );
 
   return (
     <div className="w-full grid gap-8">
-      {contributers ? (
-        <Fragment>
-          <h1 className="text-3xl font-black text-brand-primary">{`Top ${contributers.total_contributors} Contributors`}</h1>
-          <ContributorChart data={contributers} id="gatsby" href="github.com/gatsbyjs/gatsby" />
-        </Fragment>
-      ) : (
-        <Fragment>
-          {contributorsError ? (
-            <div className="border rounded border-red-300 p-2 fontbold text-red-800 bg-red-200">Error</div>
-          ) : (
-            <Loading />
-          )}
-        </Fragment>
-      )}
-      {gatsby || changelog ? (
-        <h2 className="text-3xl font-black text-brand-primary">12 Month Commit Activity</h2>
+      {contributers.isLoading ? (
+        <Loading />
+      ) : contributers.isError ? (
+        <Error />
+      ) : contributers.data ? (
+        <ContributorChart data={contributers.data} id="gatsby" href="github.com/gatsbyjs/gatsby" />
       ) : null}
-      <div className="grid gap-16">
-        {gatsby ? (
-          <CommitChart data={gatsby} id="gatsby" href="github.com/gatsbyjs/gatsby" />
-        ) : (
-          <Fragment>
-            {gatsbyError ? (
-              <div className="border rounded border-red-300 p-2 fontbold text-red-800 bg-red-200">Error</div>
-            ) : (
-              <Loading />
-            )}
-          </Fragment>
-        )}
-        {changelog ? (
-          <CommitChart data={changelog} type="bar" id="changelog" href="github.com/gatsby-inc/changelog" />
-        ) : (
-          <Fragment>
-            {changelogError ? (
-              <div className="border rounded border-red-300 p-2 fontbold text-red-800 bg-red-200">Error</div>
-            ) : (
-              <Loading />
-            )}
-          </Fragment>
-        )}
-      </div>
+
+      {gatsby.isLoading ? (
+        <Loading />
+      ) : gatsby.isError ? (
+        <Error />
+      ) : gatsby.data ? (
+        <CommitChart data={gatsby.data} id="gatsby" href="github.com/gatsbyjs/gatsby" />
+      ) : null}
+
+      {changelog.isLoading ? (
+        <Loading />
+      ) : changelog.isError ? (
+        <Error />
+      ) : changelog.data ? (
+        <CommitChart data={changelog.data} type="bar" id="changelog" href="github.com/gatsby-inc/changelog" />
+      ) : null}
     </div>
   );
 };
