@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import Seo from '../components/seo';
@@ -12,12 +11,12 @@ const Page = () => {
   const gatsby = useQuery(
     ['gatsby'],
     async () => {
-      return await (
-        await fetch('/api/github/commits', {
-          method: 'POST',
-          body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
-        })
-      ).json();
+      const response = await fetch('/api/github/commits', {
+        method: 'POST',
+        body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
+      });
+      const data = await response.json();
+      return data;
     },
     {
       retry: 2
@@ -27,12 +26,13 @@ const Page = () => {
   const changelog = useQuery(
     ['changelog'],
     async () => {
-      return await (
-        await fetch('/api/github/commits', {
-          method: 'POST',
-          body: JSON.stringify({ owner: 'gatsby-inc', repository: 'changelog' })
-        })
-      ).json();
+      const response = await fetch('/api/github/commits', {
+        method: 'POST',
+        body: JSON.stringify({ owner: 'gatsby-inc', repository: 'changelog' })
+      });
+
+      const data = await response.json();
+      return data;
     },
     {
       retry: 2
@@ -42,12 +42,13 @@ const Page = () => {
   const contributers = useQuery(
     ['contributers'],
     async () => {
-      return await (
-        await fetch('/api/github/contributors', {
-          method: 'POST',
-          body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
-        })
-      ).json();
+      const response = await fetch('/api/github/contributors', {
+        method: 'POST',
+        body: JSON.stringify({ owner: 'gatsbyjs', repository: 'gatsby' })
+      });
+
+      const data = await response.json();
+      return data;
     },
     {
       retry: 2
